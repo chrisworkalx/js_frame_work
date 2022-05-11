@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #ccc;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#container {
+  text-align: center;
+  background-color: skyblue;
+  opacity: 0.4;
+  color: #fff;
+}
+.ul {
+  list-style: none;
+  background-color: bisque;
+  cursor: pointer;
+}
+.ul li:hover {
+  background: #f40;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+#footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background-color: cadetblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

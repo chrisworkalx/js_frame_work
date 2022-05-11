@@ -1,0 +1,44 @@
+extends layout
+
+//- 这种是替换
+//- block scripts
+//-   script(src='/js/index.js')
+
+//- 这种是继续添加模块
+block append scripts
+  script(src='/js/index.js')
+
+block content
+  div 
+    div 
+      h1= title
+      p Welcome to #{title}
+    br
+    br
+    div(id='container') 
+      - var url='www.baidu.com'
+      a(
+        href='http://' + url
+        target='_blanket'
+      ) 跳转百度
+      br
+      button(id='btn') 点击获取数据
+    div 
+      //- 分支条件判断
+      - var friends = 10
+      case friends
+        when 0
+          p 您没有朋友
+        when 1
+          p 您有一个朋友
+        default
+          p 您有 #{friends} 个朋友
+      br
+      ul(class='ul') 
+        -for (var x = 0; x < 3; x++)
+          li item
+        -var list = ["Uno", "Dos", "Tres","Cuatro", "Cinco", "Seis"]
+        each item in list
+          li=item
+
+
