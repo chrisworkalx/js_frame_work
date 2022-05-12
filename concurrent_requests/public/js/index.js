@@ -97,7 +97,6 @@ $(function () {
   oBtn.addEventListener('click', handleFetch, false);
 
   function handleFetch(e) {
-    // console.log('first', e.target);
     // $.ajax({
     //   type: 'post',
     //   url: 'http://localhost:3000/test',
