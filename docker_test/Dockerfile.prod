@@ -1,0 +1,26 @@
+#  基础版Dockerfile
+ 
+ # 基础镜像 体积小
+# FROM node:16-alpine
+FROM luuviethai/node-16-alpine as builder
+
+# 指定工作目录 将代码添加至此
+WORKDIR /code
+
+# 只会针对有package.json 或者yarn.lock有文件改动会重新 npm install 可以利用缓存
+ADD package.json yarn.lock /code/
+
+RUN npm install
+
+ADD . /code
+
+
+RUN npm run build
+
+
+# 选择体积更小的镜像
+FROM nginx:alpine
+
+COPY --from=builder code/dist/ /usr/share/nginx/html
+
+CMD [ "nginx", "-g", "daemon off;" ]
