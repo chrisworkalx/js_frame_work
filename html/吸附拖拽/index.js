@@ -12,6 +12,8 @@
     resArr = [undefined, undefined, undefined, undefined],
     blankItemWidth = blankWrapperCollection[0].offsetWidth,
     blankItemHeight = blankWrapperCollection[0].offsetHeight,
+    cellW = 0,
+    cellH = 0,
     cellX = 0, // 每个成语wrapper距离左侧的offsetLeft
     cellY = 0, // 每个成语wrapper距离左侧的offsetTop
     startX = 0, // 每个成语wrapper距离左侧的clientX
@@ -74,11 +76,18 @@
     mouseX = startX - cellX;
     mouseY = startY - cellY;
     this.style.transition = 'none';
-    this.style.width = cellW / 10 + 'rem';
-    this.style.height = cellH / 10 + 'rem';
+    // this.style.width = cellW / 10 + 'rem';
+    // this.style.height = cellH / 10 + 'rem';
     this.style.position = 'fixed';
     this.style.left = cellX / 10 + 'rem';
     this.style.top = cellY / 10 + 'rem';
+    this.style.backgroundColor = '#f80'; //active 背景
+    this.style.width = cellW / 8 + 'rem'; //active 宽度
+    this.style.height = cellH / 8 + 'rem'; //active 高度
+    this.style.borderRadius = '50%';
+    this.style.boxShadow = '0 0 1.5rem 0.2rem #cccc';
+    this.style.fontSize = '3rem';
+    this.style.zIndex = 999999999;
   }
 
   function handleTouchMove(e) {
@@ -95,6 +104,29 @@
     // this -> e.target
     //开始吸附的功能
     for (let i = 0; i < blankAreas.length; i++) {
+      //第一种方法
+      // if (resArr[i] !== undefined && resArr[i].el === this) {
+      //   //表示放置成功后拖动当前这个元素
+      //   resArr[i] = undefined;
+      // }
+
+      //第二种方法
+      if (this.getAttribute('data-insert')) {
+        //如果已经有data-insert 则表示已经塞入目标区而此时需要替换
+        resArr[Number(this.getAttribute('data-insert'))] = undefined;
+        this.removeAttribute('data-insert');
+      }
+
+      /**还原 -----默认大小 start-----*/
+      this.style.backgroundColor = '#f40';
+      this.style.width = cellW / 10 + 'rem'; //active 宽度
+      this.style.height = cellH / 10 + 'rem'; //active 高度
+      this.style.borderRadius = 0;
+      this.style.fontSize = '2rem';
+      this.style.zIndex = 0;
+      this.style.boxShadow = 'none';
+      /**还原 -----默认大小 over-----*/
+
       if (resArr[i] !== undefined) {
         //判断如果数组已经放置了元素，继续下一轮
         continue;
@@ -113,8 +145,12 @@
           cellY > y &&
           cellY < y + blankItemHeight / 2)
       ) {
+        // 第二种方法 设置data-insert
+        this.setAttribute('data-insert', i);
         setPosition(this, [x, y], false);
         setResArr(this, i);
+
+        console.log(resArr, '==resArr');
 
         if (!resArr.includes(undefined)) {
           setTimeout(() => {
@@ -194,9 +230,12 @@
       const el = item.el;
       const _index = Number(el.dataset.index);
       const { x, y } = charAreas[_index];
+      el.removeAttribute('data-insert');
       setPosition(el, [x, y]);
     });
     resArr = [undefined, undefined, undefined, undefined];
+    cellW = 0;
+    cellH = 0;
     cellX = 0;
     cellY = 0;
     startX = 0;
