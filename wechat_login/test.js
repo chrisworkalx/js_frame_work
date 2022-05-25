@@ -17,7 +17,7 @@ const config = {
 
 //下面跳转链接需要在微信开发工具中登录
 const getWeChatAuthUrl =
-  // 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa0fec7628ee10af4&redirect_uri=http%3A%2F%2F192.168.0.109%3A8000%2FwechatLogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+  // 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=http%3A%2F%2F192.168.0.109%3A8000%2FwechatLogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
   `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.appId}&redirect_uri=${config.redirect_uri}&response_type=code&scope=${config.scope.isDirectlyJump}&state=STATE#wechat_redirect`;
 
 //获取access_token
