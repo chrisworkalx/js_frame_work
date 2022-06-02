@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <!-- vue3版本 -->
+  <!-- <script crossorigin="anonymous" integrity="sha512-JfwGkMqvylvt3Kk325FcgSyqRhBUcf2IkzyZWzkfOsEZQISZiEt7HmOdYgtJpLJOGTU3tyPTmB9xo4i+nLCP6w==" src="https://lib.baomitu.com/vue/3.2.11/vue.global.min.js"></script> -->
+  <!-- vue2版本 -->
+  <script
+    crossorigin="anonymous"
+    integrity="sha512-XdUZ5nrNkVySQBnnM5vzDqHai823Spoq1W3pJoQwomQja+o4Nw0Ew1ppxo5bhF2vMug6sfibhKWcNJsG8Vj9tg=="
+    src="https://lib.baomitu.com/vue/2.6.14/vue.min.js"
+  ></script>
+  <script>
+    const template = `<div>
+            <p>{{a.b}}</p>
+            <br />
+            <p>
+                <pre>
+                    {{JSON.stringify(p)}}
+                </pre>
+            </p>
+            <br />
+            <p>{{info.x}}</p>
+            <br />
+            <button @click="change(event)">改变</button>
+        </div>`;
+
+    window.onload = () => {
+      const data = Vue.observable({
+        a: {},
+      });
+      new Vue({
+        el: "#root",
+        template,
+        data() {
+          return {
+            a: {},
+            p: [1],
+            info: data,
+          };
+        },
+        created() {
+          this.a.b = 1;
+          this.p.push(2);
+        },
+        methods: {
+          change(e) {
+            console.log(e);
+            console.log(this, "===this");
+            this.a.b = '哈哈';
+            // Vue.set(this.a, "b", "哈哈哈哈");
+            // this.$nextTick(() => {
+            //     this.$set(this.a, 'b', 2222);
+            //     this.$forceUpdate();
+            // })
+          },
+        },
+        mounted() {
+          this.a.b = 2;
+          this.p.push(3);
+          this.info.x = "男";
+          setTimeout(() => {
+            console.log(1233);
+            this.a.b = 5;
+          }, 2000);
+        },
+      });
+
+      // Vue.createApp({
+      //     template,
+      //     data(){
+      //      return {
+      //         a: {},
+      //         p: [1],
+      //         info: {}
+      //      }
+      //     },
+      //     created() {
+      //       this.a.b = 1;
+      //     },
+      //     methods: {
+      //       change(e) {
+      //         console.log(e);
+      //         this.a.b = '哈哈';
+      //         // Vue.set(this.a, "b", "哈哈哈哈");
+      //       },
+      //     },
+      //     mounted() {
+      //       this.a.b = 2;
+      //          this.info.x = '女'
+      //     },
+      //   }).mount('#root')
+    };
+  </script>
+</html>

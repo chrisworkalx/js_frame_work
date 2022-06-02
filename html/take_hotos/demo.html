@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@2.6.14/dist/vue.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./js/gif.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script>
+    new Vue({
+      el: '#app',
+      template: `<div>
+    <form
+      target="stop"
+      action="上传接口"
+      method="post"
+      enctype="multipart/form-data"
+      style="position:relative;display:inline-block;"
+      id="form1"
+    >
+      <label for="pop_video1">
+        <input
+          multiple
+          style="display:none;"
+          ref="changeInput"
+          type="file"
+          name="file"
+          accept="video/*"
+          capture="environment"
+          @change="changeVideo1"
+          id="pop_video1"
+        />
+
+        <div class="inputVideo">
+          <img :src="src1" style="width:35px;height:35px;margin:5px" />
+        </div>
+        <div>
+          <div>
+            <video
+              id="myvideo1"
+              :src="videoSrc1"
+              style="height:100px;width:200px;margin:0 10px"
+              ref="videoId"
+              autoplay="true"
+              controls
+              muted
+            ></video>
+            <canvas id="canvas1" :width="winWidth1" style="height:100px;width:100px;display:none"></canvas>
+          </div>
+        </div>
+      </label>
+    </form>
+    <button
+      style="width:32%;margin-top:3%;margin-left:22%;display:inline-block"
+      @click="subMit()"
+    >上传</button>
+    <iframe name="stop" style="display:none;"></iframe>
+  </div>`,
+      data: {
+        isShow: false,
+        videoSrc1: '',
+        File1: '',
+        videoSize1: '',
+        isAndroid1: false,
+        fileAndroid1: {},
+        winWidth1: window.innerWidth,
+        winHeight1: window.innerHeight,
+        gifSetTime1: false,
+        gif1: '',
+        src1: 'https://img-home.csdnimg.cn/images/20201124032511.png'
+      },
+      created() {
+        //判断终端
+        var u = navigator.userAgent;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isAndroid) {
+          // console.log("isAndroid");
+          this.isAndroid = true;
+        } else if (isiOS) {
+          // console.log("isiOS");
+          this.isAndroid = false;
+        }
+      },
+      mounted() {
+        //初始gif
+        this.gif1 = new GIF({
+          workers: 1,
+          quality: 1000,
+          width: this.winWidth1,
+          height: this.winHeight1,
+          workerScript: './js/gif.worker.js'
+        });
+      },
+      methods: {
+        subMit() {
+          if (this.File1 !== '') {
+            $('#form1').submit();
+          }
+        },
+        changeVideo1(e) {
+          this.isshow1 = 'none';
+          this.disPlay = 'block';
+          this.isdisplay = 'block';
+          var file = e.target.files[0];
+          // console.log(file.name);
+
+          this.File1 = file.name;
+          // console.log(file);
+
+          const video = document.getElementById('myvideo1');
+          if (file !== undefined) {
+            //判断走向
+            if (this.isAndroid1) {
+              //视频开始播放
+              video.removeEventListener('play', this.videoPlay1, false);
+              //视频播放完
+              video.removeEventListener('ended', this.videoEnded1, false);
+              this.androidFile1(file);
+            } else {
+              this.iphoneFile1(file);
+            }
+          }
+        },
+        //IOS拍摄视频
+        iphoneFile1(file) {
+          const that = this;
+          //视频字节大小
+          this.videoSize1 = file.size;
+
+          var url = null;
+          //file转换成blob
+          if (window.createObjectURL != undefined) {
+            // basic
+            url = window.createObjectURL(file);
+          } else if (window.URL != undefined) {
+            // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+          } else if (window.webkitURL != undefined) {
+            // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+          }
+          this.videoSrc1 = url;
+          if (file.size < 2100000 && file.size > 500000) {
+            this.uploadVideo1(file);
+          } else if (file.size >= 2100000) {
+            this.$vux.toast.text('视频太大，请限制在10秒内');
+          } else {
+            this.$vux.toast.text('视频录制不能少于5秒');
+          }
+        },
+        //安卓拍摄视频
+        androidFile1(file) {
+          //视频字节大小
+          this.videoSize1 = file.size;
+          //   this.videoSize = file.size;
+
+          const that = this;
+          const video = document.getElementById('myvideo1');
+          const canvas = document.getElementById('canvas1');
+          var context = canvas.getContext('2d');
+
+          this.gifSetTime1 = true;
+          this.gif1.abort();
+          this.gif1.frames = [];
+
+          //file转base64
+          var reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = function () {
+            that.videoSrc1 = this.result;
+            video.play();
+          };
+          //视频开始播放
+          video.addEventListener('play', this.videoPlay1, false);
+          //视频播放完
+          video.addEventListener('ended', this.videoEnded1, false);
+
+          this.gif1.on('finished', function (blob) {
+            if (that.fileAndroid1.size == blob.size) return;
+            // console.log("gif的blob文件", blob);
+            that.fileAndroid1 = that.convertBase64UrlToFile(blob);
+            that.uploadVideo1(that.fileAndroid1);
+          });
+        },
+        //视频开始播放
+        videoPlay1() {
+          const that = this;
+          const video = document.getElementById('myvideo1');
+          const canvas = document.getElementById('canvas1');
+          var context = canvas.getContext('2d');
+          // console.log("视频时长1", video.duration);
+          //   this.videoLength = video.duration;
+          //画布上画视频，需要动态地获取它，一帧一帧地画出来
+          var times = setInterval(function () {
+            context.drawImage(video, 0, 0, that.winWidth1, that.winHeight1);
+            that.gif1.addFrame(context, {
+              copy: true
+            });
+            if (that.gifSetTime1 == false) {
+              clearInterval(times);
+            }
+          }, 200);
+        },
+        //视频播放完
+        videoEnded1() {
+          this.gifSetTime1 = false;
+          // console.log("视频播放完毕1！");
+          this.gif1.render();
+        },
+        //上传视频
+        uploadVideo1(file) {
+          alert(file.size, 1);
+
+          // 保存和提交置灰
+        }
+      }
+    });
+  </script>
+</html>
