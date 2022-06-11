@@ -1,0 +1,1 @@
+## 项目启动直接使用vue serve 对应的组件 如vue serve app.vue

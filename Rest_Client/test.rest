@@ -1,0 +1,26 @@
+
+
+
+POST https://jsonplaceholder.typicode.com/posts
+content-type: application/json
+
+{
+  "title": "姚明",
+  "body": "身高"
+}
+
+
+###
+
+
+
+
+GET https://www.fastmock.site/mock/3277f26b72e3b8aa6de012d30c06ce3f/api/api/getTargetDevice
+
+
+
+
+
+
+
+
