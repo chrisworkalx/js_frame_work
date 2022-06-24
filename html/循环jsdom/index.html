@@ -51,5 +51,22 @@
     targetNodes[0].style.cssText =
       'background-color: #f40; color: #fff; font-weight: bold; font-size: 20px;';
     console.log(targetNodes, '===targetNodes');
+
+//获取所有子元素
+    const getAllChildNodes = (targetNode) => {
+      const nodes = [];
+      const getDomTree = (targetNode, nodes) => {
+        for (let i = 0;i < targetNode.childNodes.length;i++) {
+          const node = targetNode.childNodes[i];
+          if (node.nodeType  === 1) {
+            //元素节点
+            nodes.push(node);
+            getDomTree(node, nodes);
+          }
+        }
+        return nodes;
+      };
+      return getDomTree(targetNode, nodes);
+    }
   </script>
 </html>
