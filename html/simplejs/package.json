@@ -1,0 +1,15 @@
+{
+  "name": "simplejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "testNode.js",
+  "scripts": {
+    "build:alpha": "node testNode.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "minimist": "^1.2.6"
+  }
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1>JSON.stringify</h1>
+      <pre></pre>
+    </div>
+  </body>
+  <script>
+    const data = { name: 123, hobbies: ['sports', 'music', 'movies'] };
+
+    const jsonData = JSON.stringify(data, null, 4);
+
+    document.querySelector('pre').innerHTML = jsonData;
+  </script>
+</html>
