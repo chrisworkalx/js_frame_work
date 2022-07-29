@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="box">
+        <div class="content">
+          <div class="field">
+            <div class="text">A</div>
+            <div class="text">B</div>
+            <div class="text">C</div>
+            <div class="text">D</div>
+          </div>
+        </div>
+      </div>
+      <div class="next">哈喽</div>
+    </div>
+  </body>
+  <script>
+    function getTargetNode() {
+      let childrenNodes = [];
+      const targetNode = document.querySelector('.next');
+      const previousElement = targetNode.previousElementSibling;
+
+      childrenNodes = previousElement.children;
+
+      while (childrenNodes.length > 0) {
+        if (
+          [...childrenNodes].some((child) => child.classList.contains('text'))
+        ) {
+          console.log('成功');
+          return childrenNodes;
+        }
+
+        childrenNodes = [...childrenNodes].reduce((target, node) => {
+          if (node.children) {
+            target.push(...node.children);
+          }
+          return target;
+        }, []);
+      }
+      return childrenNodes;
+    }
+
+    const targetNodes = getTargetNode();
+    targetNodes[0].style.cssText =
+      'background-color: #f40; color: #fff; font-weight: bold; font-size: 20px;';
+    console.log(targetNodes, '===targetNodes');
+
+//获取所有子元素
+    const getAllChildNodes = (targetNode) => {
+      const nodes = [];
+      const getDomTree = (targetNode, nodes) => {
+        for (let i = 0;i < targetNode.childNodes.length;i++) {
+          const node = targetNode.childNodes[i];
+          if (node.nodeType  === 1) {
+            //元素节点
+            nodes.push(node);
+            getDomTree(node, nodes);
+          }
+        }
+        return nodes;
+      };
+      return getDomTree(targetNode, nodes);
+    }
+  </script>
+</html>

@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+}
+
+.topBox,
+.bottomBox {
+  width: 100%;
+  flex-direction: row;
+}
+.bottomBox {
+  margin-top: 5rem;
+  flex-wrap: wrap;
+}
+
+.topBox .cell-wrapper-box,
+.bottomBox .cell-wrapper-box {
+  width: 25%;
+  height: 25vw;
+  padding: .5rem;
+  box-sizing: border-box;
+}
+
+.topBox .cell-wrapper-box .wrapper,
+.bottomBox .cell-wrapper-box .wrapper{
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: solid .1rem #ccc;
+}
+
+.bottomBox .cell-wrapper-box .wrapper {
+  border: none;
+  background-color: #f40;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+}

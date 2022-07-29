@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script> -->
+    <!-- <script src="https://github.elemecdn.com/vue-json-viewer@2.2.22/vue-json-viewer.js"></script> -->
+    <link
+      rel="stylesheet"
+      href="https://github.elemecdn.com/vue-json-viewer@2.2.22/style.css"
+    />
+  </head>
+  <body>
+    <div id="root">
+      {{ title }}
+      <json-viewer :value="list"></json-viewer>
+    </div>
+  </body>
+  <script type="module">
+    // import { default as Vue } from 'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js';
+    // import JsonView from 'https://github.elemecdn.com/vue-json-viewer@2.2.22/vue-json-viewer.js';
+    // import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.esm.browser.js';
+    import Vue from 'https://github.elemecdn.com/vue@2.6.10/dist/vue.min.js';
+    // Vue.use(JsonView.default);
+    console.log(Vue, '==vue');
+    // console.log(JsonView);
+    new Vue({
+      el: '#root',
+      data: {
+        title: 'hello world',
+        list: {
+          arr: [1, 2, 3],
+          age: 20,
+          date: '2022-07-29',
+          sex: '男'
+        }
+      }
+    });
+  </script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <!-- 引入微信api接口 -->
+    <script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+  </head>
+  <body>
+    <div>
+      <h1>登录页面</h1>
+      <div>
+        <p>
+          <input type="text" class="text" name="username" value="xiaoming" />
+        </p>
+        <p>
+          <input type="password" class="text" name="password" value="admin" />
+        </p>
+        <p>
+          <button class="submit">登录</button>
+        </p>
+      </div>
+      <div id="login_container"></div>
+    </div>
+  </body>
+  <script>
+    const obtn = document.querySelector('.submit');
+
+    const state = parseInt(new Date().getTime() / 1000);
+    //注意该api只能注册认证才可以使用，真实项目中会用到
+    var obj = new WxLogin({
+      id: 'login_container', // 需要显示的容器id
+      appid: '你的appId', // 公众号appid wx*******
+      scope: 'snsapi_userinfo', // 网页默认即可
+      redirect_uri: 'http%3A%2F%2F192.168.0.109%3A8000%2FwechatLogin', // 授权成功后回调的url
+      state, // 可设置为简单的随机数加session用来校验
+      style: 'black', // 提供"black"、"white"可选。二维码的样式
+      href: '' // 外部css文件url，需要https
+    });
+
+    //登录操作
+    obtn.addEventListener(
+      'click',
+      () => {
+        const oIptText = document.querySelector('input[name="username"]');
+        const oIptPwd = document.querySelector('input[name="password"]');
+
+        const params = {
+          username: oIptText.value,
+          password: oIptPwd.value
+        };
+
+        fetch('/getUserInfo')
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.code === 200) {
+              location.href = '/home';
+            }
+          });
+      },
+      false
+    );
+  </script>
+</html>
