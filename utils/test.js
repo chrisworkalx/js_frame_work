@@ -195,3 +195,5 @@ LinkedList.prototype.pop = function () {
   this.length--;
   return current.value;
 };
+
+console.log('text', '------?????');
