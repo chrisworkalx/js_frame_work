@@ -1,9 +1,23 @@
+<!--
+ * @Description  :
+ * @Version      : 1.0
+ * @Author       : mingfei.yao
+ * @Date         : 2022-11-11 11:20:19
+ * @LastEditors  : mingfei.yao
+ * @LastEditTime : 2023-01-06 13:49:18
+ * @FilePath     : \\vue-draggable\\src\\App.vue
+ * @Copyright (C) 2022 mingfei.yao. All rights reserved.
+ -->
+/
 <template>
   <div id="app">
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/socket">Socket</router-link>
+      <router-link to="/socket">Socket</router-link> |
+      <router-link to="/form">Form</router-link> |
+      <router-link to="/formTwo">formTwo</router-link> |
+      <router-link to="/process">进度条</router-link>
     </nav>
     <router-view />
   </div>
