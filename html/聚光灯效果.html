@@ -1,0 +1,70 @@
+<!--
+ * @Description  : 
+ * @Version      : 1.0
+ * @Author       : mingfei.yao
+ * @Date         : 2023-01-20 10:52:43
+ * @LastEditors  : mingfei.yao
+ * @LastEditTime : 2023-01-20 10:57:08
+ * @FilePath     : \\js_frame_work\\html\\聚光灯效果.html
+ * Copyright (C) 2023 mingfei.yao. All rights reserved.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      :root {
+        --grey-6: gray;
+      }
+
+      html,
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #app {
+        font-size: bold;
+        width: max-content;
+        color: var(--grey-6);
+        position: relative;
+        text-transform: uppercase;
+        font-size: 100px;
+      }
+      #app::after {
+        content: attr(data-content);
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(
+          to right,
+          rgb(236, 72, 153),
+          rgb(239, 68, 68),
+          rgb(234, 179, 8)
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        clip-path: ellipse(100px 100px at 0% 50%);
+        animation: move 3s ease-in infinite;
+        text-transform: uppercase;
+      }
+
+      @keyframes move {
+        50% {
+          clip-path: ellipse(100px 100px at 100% 50%);
+        }
+        to {
+          clip-path: ellipse(100px 100px at 0% 50%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" data-content="chrisworkalx">chrisworkalx</div>
+  </body>
+</html>

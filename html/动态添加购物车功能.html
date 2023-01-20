@@ -1,0 +1,143 @@
+<!--
+ * @Description  : 
+ * @Version      : 1.0
+ * @Author       : mingfei.yao
+ * @Date         : 2023-01-20 11:01:40
+ * @LastEditors  : mingfei.yao
+ * @LastEditTime : 2023-01-20 11:38:26
+ * @FilePath     : \\js_frame_work\\html\\动态添加购物车功能.html
+ * Copyright (C) 2023 mingfei.yao. All rights reserved.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      .plus {
+        position: fixed;
+        top: var(--top);
+        left: var(--left);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        animation: moveY 0.8s cubic-bezier(0.5, -0.5, 1, 1);
+      }
+      .plus .plus-icon {
+        width: 100%;
+        height: 100%;
+        background-color: #5151e7;
+        border-radius: 50%;
+        animation: moveX 0.8s linear;
+      }
+      .plus .plus-icon::before {
+        position: absolute;
+        content: '';
+        left: calc(50% - 2px);
+        top: 3px;
+        width: 4px;
+        height: 24px;
+        margi-left: -2px;
+        background-color: #fff;
+        border-radius: 8px;
+      }
+      .plus .plus-icon::after {
+        position: absolute;
+        content: '';
+        left: 3px;
+        top: calc(50% - 2px);
+        width: 24px;
+        height: 4px;
+        margi-top: -2px;
+        background-color: #fff;
+        border-radius: 8px;
+      }
+      .car {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: 240px;
+        bottom: 100px;
+        color: #fff;
+        border-radius: 50%;
+        background-color: #5151e7;
+      }
+      button {
+        border: 0;
+        background-color: #5151e7;
+        border-radius: 10px;
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        padding: 20px;
+        color: #fff;
+        cursor: pointer;
+      }
+      button:active {
+        color: #5151e7;
+        background-color: #fff;
+      }
+
+      @keyframes moveX {
+        to {
+          transform: translateX(var(--x));
+        }
+      }
+      @keyframes moveY {
+        to {
+          transform: translateY(var(--y));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button>加入购物车</button>
+    <div class="car">购</div>
+    <!-- <div class="plus">
+      <div class="plus-icon"></div>
+    </div> -->
+  </body>
+  <script>
+    const btn = document.querySelector('button');
+    const car = document.querySelector('.car');
+    const PLUS_SIZE = 30;
+    btn.onclick = function () {
+      const box = document.createElement('div');
+      box.className = 'plus';
+      box.innerHTML = '<div class="plus-icon"></div>';
+
+      const btnRect = btn.getBoundingClientRect();
+      const left = btnRect.left + btnRect.width / 2 - PLUS_SIZE / 2;
+      const top = btnRect.top - PLUS_SIZE;
+      const carRect = car.getBoundingClientRect();
+
+      const x = carRect.left + carRect.width / 2 - PLUS_SIZE / 2 - left;
+      const y = carRect.top - PLUS_SIZE - top;
+
+      box.style.setProperty('--left', left + 'px');
+      box.style.setProperty('--top', top + 'px');
+      box.style.setProperty('--x', x + 'px');
+      box.style.setProperty('--y', y + 'px');
+
+      box.addEventListener('animationend', () => {
+        box.remove();
+      });
+      document.body.appendChild(box);
+    };
+  </script>
+</html>
