@@ -4,10 +4,14 @@
  * @Author       : mingfei.yao
  * @Date         : 2022-12-09 10:58:22
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2022-12-16 11:51:04
- * @FilePath     : \\flexiv_cloud_frontend\\src\\utils\\websocket\\socket2.js
+ * @LastEditTime : 2023-01-10 15:53:26
+ * @FilePath     : \\release_2.1.5\\src\\utils\\websocket\\socket.js
  * @Copyright (C) 2022 mingfei.yao. All rights reserved.
  */
+import { messageCenter } from './messageCenter.js';
+import { getUUID } from '@/utils';
+
+
 const eventMap = new Map();
 const serviceMap = {};
 const event = {
@@ -16,9 +20,39 @@ const event = {
   onclose: [],
   onerror: []
 };
+const hasConnectedFun = new Map();
 
-import { messageCenter } from './messageCenter.js';
+export const handleFilterSubscribers = ({type, key, url}) => {
+  if(type === 'closeAll') {
+    hasConnectedFun.clear();
+    return;
+  }
+  if(hasConnectedFun.has(url)) {
+    let subscribers = hasConnectedFun.get(url);
+    const index = subscribers.findIndex(s => s === key);
+    if(index !== -1) {
+      subscribers.splice(index, 1);
+      hasConnectedFun.set(url, subscribers);
+      if(!subscribers.length) {
+        hasConnectedFun.delete(url);
+      }
+    }
+  }
+};
 
+export const collectSubscribers = (url) => {
+  messageCenter.emit('websocket-connect', (key = getUUID()) => {
+    if(hasConnectedFun.has(url)) {
+      const subscribeListeners = hasConnectedFun.get(url);
+      if(subscribeListeners.indexOf(key) === -1) {
+        subscribeListeners.push(key);
+      }
+      hasConnectedFun.set(url, subscribeListeners);
+    } else {
+      hasConnectedFun.set(url, [key]);
+    }
+  });
+};
 
 export class SocketService {
   socketInstance = null; //
@@ -104,8 +138,8 @@ export class SocketService {
     this.socketInstance.send(params);
     return this;
   }
-  close() {
-    if (this.socketInstance) {
+  closeWebsocketInstance() {
+    if (this.socketInstance && !hasConnectedFun.has(this.initOpt.url)) {
       this.socketInstance.close();
       this.socketInstance = null;
       this.lockReconnect = true; // 防止因为主动关闭 而导致的重新连接
@@ -118,6 +152,13 @@ export class SocketService {
       delete serviceMap[this.initOpt.url]; // 删除服务实例
       eventMap.delete(this.initOpt.url); // 删除事件
     }
+  }
+  close({
+    type = '',
+    key = ''
+  }) {
+    handleFilterSubscribers({type, key, url: this.initOpt.url});
+    this.closeWebsocketInstance();
     return this;
   }
   //关闭所有的websocket实例
@@ -125,7 +166,7 @@ export class SocketService {
     for(let key in serviceMap) {
       if(serviceMap[key]) {
         //关闭socket实例
-        serviceMap[key].close();
+        serviceMap[key].close({type: 'closeAll'});
       }
     }
     for(let key in serviceMap) {
@@ -208,11 +249,13 @@ export const socketRequest = (opt) => {
   }
   let service = {ws: null};
   if (serviceMap[opt.url]) {
-    service.ws = serviceMap[opt.url];
+    service.ws = serviceMap[opt.url].ws;
     SocketService.collectEvent(opt, service.ws);
+    collectSubscribers(opt.url);
   } else {
     service.ws = new SocketService(opt);
     serviceMap[opt.url] = service;
+    collectSubscribers(opt.url);
   }
   handleProxyServiceMap(serviceMap, service);
   return service;
