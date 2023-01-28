@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</body>
+<script>
+//原生ajax的语法    
+let xhr = new XMLHttpRequest();
+xhr.open("GET", "http://nodejs-cloud-studio-demo-bkzxs.nodejs-cloud-studio-demo.50185620.cn-hangzhou.fc.devsapp.net/test?username=zs&age=20", true);
+xhr.onload = function(){
+    console.log(xhr.responseText)
+}
+xhr.send();
+//在谷歌浏览器的低速3g下面测试
+//通过XMLHttpRequest实例的abort方法取消请求
+setTimeout(() => xhr.abort(), 100);
+</script>
+</html>
