@@ -1,0 +1,42 @@
+<!--
+ * @Description  : 
+ * @Version      : 1.0
+ * @Author       : mingfei.yao
+ * @Date         : 2023-01-28 15:09:13
+ * @LastEditors  : mingfei.yao
+ * @LastEditTime : 2023-01-28 15:16:32
+ * @FilePath     : \\js_frame_work\\html\\控制台调试hover元素.html
+ * Copyright (C) 2023 mingfei.yao. All rights reserved.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      h1 {
+        width: 300px;
+        height: 40px;
+        background-color: #ccc;
+        color: #fff;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        line-height: 40px;
+      }
+      h1:hover {
+        background-color: #f40;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>hello js</h1>
+    <p>
+      当我们想查看一个元素在鼠标悬浮状态下的样式时会发现无法保持住hover状态，要是能有办法将页面定住就好了。你别说，还真有。首先将面板切换至Source，把鼠标悬浮到待查看的元素上，按下command+\，此时页面和debug模式一样，脚本已经暂停运行，这个时候再选中该元素就可以看到其hover下的样式了。
+    </p>
+    <p>command + shift + d 快速切换调试面板位置</p>
+    <p>command + [ 或者 command + ] 快速切换调试面板中功能区</p>
+  </body>
+</html>
