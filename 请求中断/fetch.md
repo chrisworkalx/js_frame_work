@@ -17,3 +17,14 @@ controller.abort();
 
 ```
 > error 注意：AbortController 是一个新的API, 浏览器支持可能不完全。
+> 在取消操作后，在 fetch promise 上的 catch 块将被调用，并且将传递一个 AbortError 对象。
+```js
+fetch(url, { signal: controller.signal }).catch(err => {
+    if (err.name === 'AbortError') {
+      console.log('Fetch abort')
+    } else {
+      console.log('Fetch Error:', err)
+    }
+  });
+任何时候都可以调用 controller.abort() 取消fetch请求，但是请注意在某些情况下取消可能不会立即生效。
+```
