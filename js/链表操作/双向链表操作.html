@@ -1,0 +1,46 @@
+<!--
+ * @Description  : 
+ * @Version      : 1.0
+ * @Author       : mingfei.yao
+ * @Date         : 2023-01-28 15:38:50
+ * @LastEditors  : mingfei.yao
+ * @LastEditTime : 2023-01-28 17:13:22
+ * @FilePath     : \\js_frame_work\\js\\链表操作\\双向链表操作.html
+ * Copyright (C) 2023 mingfei.yao. All rights reserved.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <p><button id="doubleAdd">双向列表创建</button></p>
+      <p><button id="doubleReverseDisplay">双向列表反显</button></p>
+      <p><button id="doubleDelete">双向列表反显</button></p>
+    </div>
+    <script src="./双向链表.js"></script>
+    <script>
+      var fruits = new LList();
+
+      doubleAdd.onclick = () => {
+        fruits.insert('Apple', 'head');
+        fruits.insert('Banana', 'Apple');
+        fruits.insert('Pear', 'Banana');
+        fruits.insert('Grape', 'Pear');
+        fruits.display();
+      };
+
+      doubleReverseDisplay.onclick = () => {
+        fruits.dispReverse();
+      };
+      doubleDelete.onclick = () => {
+        fruits.remove('Banana');
+        fruits.display();
+      };
+    </script>
+  </body>
+</html>
