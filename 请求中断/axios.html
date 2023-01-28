@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.min.js" type="application/javascript"></script>
+    <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/axios/0.26.0/axios.min.js" type="application/javascript"></script>
+    <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qs/6.10.3/qs.js" type="application/javascript"></script>
+
+</head>
+<body>
+    <div id="app">
+        <button @click="onClick1" ref="btn1">请求1</button>
+        <button @click="onClick2" ref="btn2">请求2</button>
+    </div>
+</body>
+<script>
+//存储请求信息和取消方法的的map对象    
+const pendingRequest = new Map();  
+//根据请求的信息(请求方式,url,请求get/post数据),产生map的key
+function getRequestKey(config){
+    const { method, url, params, data } = config;
+    return [method, url, Qs.stringify(params), Qs.stringify(data)].join("&");
+}   
+//请求拦截器
+axios.interceptors.request.use(
+    function (config) {
+    //根据请求的信息(请求方式,url,请求get/post数据),产生map的key
+    let requestKey = getRequestKey(config)
+    //判断请求是否重复
+    if(pendingRequest.has(requestKey)){
+        //取消上次请求
+        let cancel = pendingRequest.get(requestKey)
+        cancel()
+        //删除请求信息
+        pendingRequest.delete(requestKey) 
+    }
+    //把请求信息,添加请求到map当中
+    // 生成取消方法
+    config.cancelToken = config.cancelToken || new axios.CancelToken(cancel => {
+        // 把取消方法添加到map
+        if (!pendingRequest.has(requestKey)) {
+            pendingRequest.set(requestKey, cancel)
+        }
+    })
+    return config;
+  },
+  (error) => {
+     return Promise.reject(error);
+  }
+);
+//删除请求信息
+function delPendingRequest(config){
+    let requestKey = getRequestKey(config)
+    if(pendingRequest.has(requestKey)){
+        pendingRequest.delete(requestKey)   
+    } 
+}
+//响应拦截器
+axios.interceptors.response.use(
+  (response) => {
+        //请求成功
+        //删除请求的信息
+        delPendingRequest(response.config)
+        return response;
+   },
+   (error) => {
+        //请求失败
+        //不是取消请求的错误
+        if (!axios.isCancel(error)){
+            //服务器报400,500报错,删除请求信息
+            delPendingRequest(error.config || {})
+        } 
+        return Promise.reject(error);
+   }
+);
+let sendPost = function(data){
+    return axios({
+        url: 'http://nodejs-cloud-studio-demo-bkzxs.nodejs-cloud-studio-demo.50185620.cn-hangzhou.fc.devsapp.net/test',
+        method: 'post',
+        data
+    })
+}
+new Vue({
+    el: '#app',
+    mounted() {
+        this.$refs.btn1.click()
+        this.$refs.btn2.click()
+    },
+    methods: {
+        // 使用lodash对请求方法做防抖
+        //这里有问题,只是对每个按钮的点击事件单独做了防抖,但是两个按钮之间做不到防抖的效果
+        onClick1: async function(){
+            let res = await sendPost({username:'zs', age: 20})
+            console.log('请求1的结果', res.data)
+        },
+        onClick2: async function(){
+            let res = await sendPost({username:'zs', age: 20})
+            console.log('请求2的结果', res.data)
+        },
+    },
+})
+</script>
+</html>
