@@ -4,7 +4,11 @@
  * @Author       : mingfei.yao
  * @Date         : 2023-02-01 12:20:54
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2023-02-01 13:59:03
+<<<<<<< HEAD
+ * @LastEditTime : 2023-02-01 15:15:13
+=======
+ * @LastEditTime : 2023-02-01 15:13:31
+>>>>>>> 0db29a7 (feat: 测试vue钩子函数)
  * @FilePath     : \\js_frame_work\\js\\index.html
  * Copyright (C) 2023 mingfei.yao. All rights reserved.
 -->
@@ -31,20 +35,51 @@
   <script>
     let vm = new Vue({
       el: '#app',
-      data: {
-        name: 'vue2',
-        text: 111,
-        obj: {
-          age: 10,
-          a: {
-            b: {}
+      components: {
+        myApp: {
+          template: `
+            <div>我是自组件
+              <ul>
+                <li v-for="items of abc" :key="items">{{items}}</li>
+                </ul>
+                <button @click="deleteAbcAge">删除age</button>
+              </div>
+          `,
+          data() {
+            return {
+              abc: {
+                name: '自组件',
+                age: 10
+              }
+            };
+          },
+          methods: {
+            deleteAbcAge() {
+              // this.$delete(this.abc, 'age'); //这里可以更新页面
+              // delete this.abc.age; //这里不会更新 this.$forceUpdate()强制更新
+              this.abc.age
+                ? this.$delete(this.abc, 'age')
+                : this.$set(this.abc, 'age', Math.random().toFixed(2));
+            }
           }
-        },
-        arr: [
-          {
-            name: 'hhhh'
-          }
-        ]
+        }
+      },
+      data() {
+        return {
+          name: 'vue2',
+          text: 111,
+          obj: {
+            age: 10,
+            a: {
+              b: {}
+            }
+          },
+          arr: [
+            {
+              name: 'hhhh'
+            }
+          ]
+        };
       },
       mounted() {
         // this.obj.a.b.c = '爱好2';
@@ -67,7 +102,9 @@
         // );
         console.log(this.$data);
         setTimeout(() => {
-          this.name = 'vue3要来了';
+          // this.name = 'vue3要来了';
+          // this.$delete(this, 'name');
+          this.name = null;
           this.arr.push({ name: 'pppp' });
         }, 2000);
         // this._update(this._render());
