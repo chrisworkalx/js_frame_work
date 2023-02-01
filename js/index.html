@@ -1,0 +1,157 @@
+<!--
+ * @Description  : 
+ * @Version      : 1.0
+ * @Author       : mingfei.yao
+ * @Date         : 2023-02-01 12:20:54
+ * @LastEditors  : mingfei.yao
+ * @LastEditTime : 2023-02-01 13:59:03
+ * @FilePath     : \\js_frame_work\\js\\index.html
+ * Copyright (C) 2023 mingfei.yao. All rights reserved.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.3.2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{name}}</h1>
+      <!-- <h1>{{obj.a.b.c}}</h1> -->
+      <h1 ref="flushRef">{{ finalName }}</h1>
+      <hr />
+      <ul ref="ulRef">
+        <li v-for="(item, index) in arr" :key="index">{{ item.name }}</li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        name: 'vue2',
+        text: 111,
+        obj: {
+          age: 10,
+          a: {
+            b: {}
+          }
+        },
+        arr: [
+          {
+            name: 'hhhh'
+          }
+        ]
+      },
+      mounted() {
+        // this.obj.a.b.c = '爱好2';
+        // delete this.obj.a.b;
+        // this.$delete(this.obj.a, 'b');
+        // console.log(this.obj, '--this.obj');
+        // this.$set(this.obj.a.b, 'c', '爱好2');
+        // this.$watch(
+        // 'arr',
+        // (n) => {
+        //   console.log('hhhhhhh', n);
+        //   console.log(this.$refs.flushRef.innerText);
+        //   console.log(this.$refs.ulRef.innerHTML);
+        // },
+        // {
+        // deep: true
+        // flush: 'post'
+        // immediate: true
+        // }
+        // );
+        console.log(this.$data);
+        setTimeout(() => {
+          this.name = 'vue3要来了';
+          this.arr.push({ name: 'pppp' });
+        }, 2000);
+        // this._update(this._render());
+        // console.log('this', this);
+        // this.$forceUpdate();
+      },
+      methods: {
+        watchText() {
+          console.log('kkkk');
+        }
+      },
+      beforeDestroy() {},
+      computed: {
+        finalName() {
+          console.log('finalName');
+          return this.name + '----' + this.text;
+        }
+      },
+      watch: {
+        name: [
+          () => {
+            console.log(1);
+          },
+          () => {
+            console.log(2);
+          }
+        ],
+        text: 'watchText',
+        arr: {
+          handler(n) {
+            this.$nextTick(() => {
+              console.log('hhhhhhh', n);
+              console.log(this.$refs.flushRef.innerText);
+              console.log(this.$refs.ulRef.innerHTML);
+            });
+          },
+          deep: true,
+          flush: 'post'
+        }
+      }
+    });
+    let s = { age: 10 };
+    // vm.obj.hobby = '爱好1';
+    // vm.obj.a.b.c = '爱好2';
+    // setTimeout(() => {
+    //   vm.name = 11111;
+    //   vm.text = 898989;
+    //   vm.finalName;
+    //   vm.name = 222222;
+    //   vm.finalName;
+    //   vm.finalName;
+    //   vm.finalName;
+    //   vm.finalName;
+    //   vm.finalName;
+    //   vm.finalName;
+    //   // delete vm.obj.age;
+    //   // vm.$delete(vm.obj, 'age');
+    //   // delete s.age;
+    //   console.log('vm.obj', vm.obj);
+    //   console.log('s', s);
+    // }, 2000);
+  </script>
+  <!-- <script>
+    obj = {
+      age: 30
+    };
+
+    Object.keys(obj).forEach((k) => walk(obj, k));
+
+    function walk(target, key) {
+      console.log('key', key);
+      let value = target[key];
+      return Object.defineProperty(target, key, {
+        enumerable: true,
+        configurable: false,
+        get() {
+          console.log('get---');
+          return value;
+        },
+        set(n) {
+          console.log('写入----');
+          value = n;
+        }
+      });
+    }
+  </script> -->
+</html>
