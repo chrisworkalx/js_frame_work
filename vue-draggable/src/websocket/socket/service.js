@@ -16,7 +16,7 @@ import { socketRequest } from './socket2';
 export function SApiMessageNotice(opt) {
   const wsProtocol = window.location.protocol.includes('https') ? 'wss://' : 'ws://';
   const wsUrl = `${wsProtocol}10.18.0.50:8080/provider/websocket/`;
-  const {url = wsUrl, params = '', ...rest } = opt;
+  const { url = wsUrl, params = '', ...rest } = opt;
   return socketRequest({
     url,
     params,

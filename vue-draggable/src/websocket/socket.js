@@ -1,5 +1,6 @@
-import store from '../store';
 import Vue from 'vue';
+import store from '../store';
+
 const EventBus = new Vue();
 
 /**
@@ -12,18 +13,18 @@ const client = {
   hasConnected: false,
   jumpTimer: null,
   hasHeartJumping: true,
-  //每5秒心跳一次
+  // 每5秒心跳一次
   jumpInterval: 5000,
   reconnectTimes: 0,
   wss: null,
-  //消息队列
+  // 消息队列
   msgQueue: [],
   trace(value) {
     const { cmd, msg, data } = value;
     const msgData = !data ? '' : (typeof data === 'object') ? JSON.stringify(data) : data;
     console.log(cmd, msg, msgData);
   },
-  //断开
+  // 断开
   disconnect() {
     if (this.wss) {
       this.wss.close();
@@ -37,9 +38,9 @@ const client = {
     this.reconnectTimes = 0;
     this.msgQueue = [];
   },
-  //连接
+  // 连接
   connect() {
-    const token = store.getters.token;
+    const { token } = store.getters;
     if (!token) {
       this.trace({ cmd: 'connect', msg: '请先登录' });
       return;
@@ -53,12 +54,12 @@ const client = {
     const url = `ws://121.40.165.18:8800?token=${token}`;
     this.trace({ cmd: 'connect', msg: `连接 ${url}` });
     this.wss = new WebSocket(url);
-    //监听open
+    // 监听open
     this.wss.onopen = () => {
-      let {readyState} = this.wss;
-      if(readyState===1){
-        console.log('连接服务成功了',readyState);
-        this.trace({ cmd: 'onopen', msg: 'onopen'+readyState });
+      const { readyState } = this.wss;
+      if (readyState === 1) {
+        console.log('连接服务成功了', readyState);
+        this.trace({ cmd: 'onopen', msg: `onopen${readyState}` });
         this.hasConnected = true;
         this.reconnectTimes = 0;
         this.hasHeartJumping = true;
@@ -85,11 +86,11 @@ const client = {
 
     this.wss.onmessage = (res) => {
       this.trace({ cmd: 'onmessage', msg: 'onmessage', data: res.data });
-      let data = res.data;
+      let { data } = res;
       if (!data) {
         return;
       }
-      data = {cmd:'heart',data};// data = JSON.parse(data);
+      data = { cmd: 'heart', data };// data = JSON.parse(data);
       if (data.cmd === 'heart') {
         this.hasHeartJumping = true;
         return;
@@ -98,7 +99,7 @@ const client = {
     };
   },
   reconnect(force = false) {
-    this.trace({ cmd: 'reconnect', msg: 'reconnect', data: { force, reconnectTimes: this.reconnectTimes }});
+    this.trace({ cmd: 'reconnect', msg: 'reconnect', data: { force, reconnectTimes: this.reconnectTimes } });
     if (!force && this.reconnectTimes > 10) {
       return;
     }
@@ -106,7 +107,7 @@ const client = {
     this.connect();
     this.reconnectTimes++;
   },
-  //心跳
+  // 心跳
   jumpHeart() {
     if (this.jumpTimer) {
       clearInterval(this.jumpTimer);
@@ -132,14 +133,14 @@ const client = {
     }
     this.wss.send(data);
   },
-  //发送消息
+  // 发送消息
   sendMsg(value) {
-    //断开重联
+    // 断开重联
     if (!this.hasConnected) {
       this.msgQueue.push(value);
       this.reconnect(true);
     } else {
-      //发送socket消息内容
+      // 发送socket消息内容
       this.toSocket(value);
     }
   }

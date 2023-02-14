@@ -4,7 +4,7 @@
  * @Author       : mingfei.yao
  * @Date         : 2022-11-11 11:20:19
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2023-01-06 13:49:05
+ * @LastEditTime : 2023-02-10 19:10:11
  * @FilePath     : \\vue-draggable\\src\\router\\index.js
  * @Copyright (C) 2022 mingfei.yao. All rights reserved.
  */
@@ -63,6 +63,15 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/Process.vue')
+  },
+  {
+    path: '/guide',
+    name: 'guide',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Guide.vue')
   }
 ];
 

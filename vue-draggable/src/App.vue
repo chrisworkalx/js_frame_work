@@ -4,20 +4,21 @@
  * @Author       : mingfei.yao
  * @Date         : 2022-11-11 11:20:19
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2023-01-20 12:37:12
- * @FilePath     : \\js_frame_work\\vue-draggable\\src\\App.vue
+ * @LastEditTime : 2023-02-10 19:08:48
+ * @FilePath     : \\vue-draggable\\src\\App.vue
  * @Copyright (C) 2022 mingfei.yao. All rights reserved.
  -->
 /
 <template>
   <div id="app">
-    <nav></nav>
+    <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/socket">Socket</router-link> |
       <router-link to="/form">Form</router-link> |
       <router-link to="/formTwo">formTwo</router-link> |
-      <router-link to="/process">进度条</router-link>
+      <router-link to="/process">进度条</router-link> |
+      <router-link to="/guide">引导页</router-link>
     </nav>
     <h1>1</h1>
     <router-view />

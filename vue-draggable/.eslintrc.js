@@ -1,3 +1,13 @@
+/**
+ * @Description  :
+ * @Version      : 1.0
+ * @Author       : mingfei.yao
+ * @Date         : 2023-01-28 15:28:05
+ * @LastEditors  : mingfei.yao
+ * @LastEditTime : 2023-02-10 18:48:11
+ * @FilePath     : \\vue-draggable\\.eslintrc.js
+ * @Copyright (C) 2023 mingfei.yao. All rights reserved.
+ */
 module.exports = {
   root: true,
   env: {
