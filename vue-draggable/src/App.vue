@@ -4,7 +4,7 @@
  * @Author       : mingfei.yao
  * @Date         : 2022-11-11 11:20:19
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2023-02-10 19:08:48
+ * @LastEditTime : 2023-02-15 11:58:30
  * @FilePath     : \\vue-draggable\\src\\App.vue
  * @Copyright (C) 2022 mingfei.yao. All rights reserved.
  -->
@@ -18,7 +18,9 @@
       <router-link to="/form">Form</router-link> |
       <router-link to="/formTwo">formTwo</router-link> |
       <router-link to="/process">进度条</router-link> |
-      <router-link to="/guide">引导页</router-link>
+      <router-link to="/guide">引导页</router-link> |
+      <router-link to="/drag">VueDraggable测试</router-link>|
+      <router-link to="/elSelect">elSelect</router-link>
     </nav>
     <h1>1</h1>
     <router-view />

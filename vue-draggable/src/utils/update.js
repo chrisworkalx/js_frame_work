@@ -4,8 +4,8 @@
  * @Author       : mingfei.yao
  * @Date         : 2023-01-20 11:47:27
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2023-01-20 12:23:53
- * @FilePath     : \\js_frame_work\\vue-draggable\\src\\utils\\update.js
+ * @LastEditTime : 2023-02-14 14:15:44
+ * @FilePath     : \\vue-draggable\\src\\utils\\update.js
  * @Copyright (C) 2023 mingfei.yao. All rights reserved.
  */
 
@@ -29,7 +29,8 @@ export class Updater {
 
   // eslint-disable-next-line class-methods-use-this
   async getHtml() {
-    const html = await fetch('http://47.100.90.213/').then(
+    const url = '/'; // 'http://47.100.90.213/'
+    const html = await fetch(url).then(
       (res) => res.text()
       // eslint-disable-next-line function-paren-newline
     ); // 读取index html
@@ -70,7 +71,7 @@ export class Updater {
     setInterval(async () => {
       const newHtml = await this.getHtml();
       this.newScript = this.parserScript(newHtml);
-      console.log('this.newScript', this.newScript);
+      // console.log('this.newScript', this.newScript);
       this.compare(this.oldScript, this.newScript);
     }, time);
   }

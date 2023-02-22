@@ -4,8 +4,8 @@
  * @Author       : mingfei.yao
  * @Date         : 2022-11-11 11:20:19
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2023-01-20 12:33:42
- * @FilePath     : \\js_frame_work\\vue-draggable\\src\\main.js
+ * @LastEditTime : 2023-02-14 14:16:32
+ * @FilePath     : \\vue-draggable\\src\\main.js
  * @Copyright (C) 2022 mingfei.yao. All rights reserved.
  */
 import Vue from 'vue';
@@ -27,11 +27,11 @@ const up = new Updater({
 });
 // 未更新通知
 up.on('no-update', () => {
-  console.log('未更新');
+  // console.log('未更新');
 });
 // 更新通知
 up.on('update', () => {
-  console.log('更新了');
+  // console.log('更新了');
   setTimeout(() => {
     MessageBox({
       title: '版本跟新了',
