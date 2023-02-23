@@ -4,7 +4,7 @@
  * @Author       : mingfei.yao
  * @Date         : 2022-11-11 11:20:19
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2023-02-15 11:58:18
+ * @LastEditTime : 2023-02-22 18:51:39
  * @FilePath     : \\vue-draggable\\src\\router\\index.js
  * @Copyright (C) 2022 mingfei.yao. All rights reserved.
  */
@@ -90,6 +90,24 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/El-Select.vue')
+  },
+  {
+    path: '/elDrag',
+    name: 'el-drag',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/El-Dragger-tree.vue')
+  },
+  {
+    path: '/testProps',
+    name: 'testProps',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/TestProps.vue')
   }
 ];
 

@@ -4,7 +4,7 @@
  * @Author       : mingfei.yao
  * @Date         : 2023-01-28 15:28:05
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2023-02-10 18:48:11
+ * @LastEditTime : 2023-02-22 11:02:50
  * @FilePath     : \\vue-draggable\\.eslintrc.js
  * @Copyright (C) 2023 mingfei.yao. All rights reserved.
  */
@@ -23,6 +23,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'comma-dangle': ['error', 'never'],
     'implicit-arrow-linebreak': 'off',
-    'import/no-extraneous-dependencies': 'off'
+    'import/no-extraneous-dependencies': 'off',
+    'no-unused-vars': 'off'
   }
 };
