@@ -4,13 +4,14 @@
  * @Author       : mingfei.yao
  * @Date         : 2023-02-22 18:48:44
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2023-02-22 19:07:44
+ * @LastEditTime : 2023-03-09 15:24:22
  * @FilePath     : \\vue-draggable\\src\\views\\TestProps.vue
  * @Copyright (C) 2023 mingfei.yao. All rights reserved.
  -->
 <template>
   <div>
     <TestProvider @changeProvide="changeProvide"/>
+    <vue-demo></vue-demo>
   </div>
 </template>
 

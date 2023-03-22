@@ -3664,7 +3664,7 @@
   "resolved" "https://registry.npmjs.org/core-js/-/core-js-2.6.12.tgz"
   "version" "2.6.12"
 
-"core-js@^3.8.3":
+"core-js@^3.6.5", "core-js@^3.8.3":
   "integrity" "sha512-+DkDrhoR4Y0PxDz6rurahuB+I45OsEUv8E1maPTB6OuHRohMMcznBq9TMpdpDMm/hUPob/mJJS3PqgbHpMTQgw=="
   "resolved" "https://registry.npmmirror.com/core-js/-/core-js-3.26.0.tgz"
   "version" "3.26.0"
@@ -10832,12 +10832,21 @@
     "hash-sum" "^2.0.0"
     "loader-utils" "^2.0.0"
 
+"vue-msg-xiaoxiaobojue@^0.1.0":
+  "integrity" "sha512-v+Y2p068XoYF/ZqnI2wJaXu6UfilEC863kHa/YIsZ+gaPB3gjf89wBHRndnm7PCmB7lXktx/IlhnSlrBdSbs/Q=="
+  "resolved" "https://registry.npmjs.org/vue-msg-xiaoxiaobojue/-/vue-msg-xiaoxiaobojue-0.1.0.tgz"
+  "version" "0.1.0"
+  dependencies:
+    "core-js" "^3.6.5"
+    "vue" "^2.6.11"
+    "vue-router" "^3.2.0"
+
 "vue-native-websocket@^2.0.15":
   "integrity" "sha512-i3UvRL99rY8ytV0VJzcWDwY3fRPoeh2fGYvB9862JocEQOx/oCw/VtPIUwP4tSzmzJvJZNkvP71wfhfS1sVhxQ=="
   "resolved" "https://registry.npmjs.org/vue-native-websocket/-/vue-native-websocket-2.0.15.tgz"
   "version" "2.0.15"
 
-"vue-router@^3.5.1":
+"vue-router@^3.2.0", "vue-router@^3.5.1":
   "integrity" "sha512-VYXZQLtjuvKxxcshuRAwjHnciqZVoXAjTjcqBTz4rKc8qih9g9pI3hbDjmqXaHdgL3v8pV6P8Z335XvHzESxLQ=="
   "resolved" "https://registry.npmmirror.com/vue-router/-/vue-router-3.6.5.tgz"
   "version" "3.6.5"
@@ -10863,7 +10872,7 @@
   "resolved" "https://registry.npmmirror.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@*", "vue@^2 || ^3.2.13", "vue@^2.0.0", "vue@^2.5.17", "vue@^2.6.14":
+"vue@*", "vue@^2 || ^3.2.13", "vue@^2.0.0", "vue@^2.5.17", "vue@^2.6.11", "vue@^2.6.14":
   "integrity" "sha512-b2qkFyOM0kwqWFuQmgd4o+uHGU7T+2z3T+WQp8UBjADfEv2n4FEMffzBmCKNP0IGzOEEfYjvtcC62xaSKeQDrQ=="
   "resolved" "https://registry.npmmirror.com/vue/-/vue-2.7.14.tgz"
   "version" "2.7.14"

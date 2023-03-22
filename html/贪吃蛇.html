@@ -1,0 +1,105 @@
+<!--
+ * @Description  : 
+ * @Version      : 1.0
+ * @Author       : mingfei.yao
+ * @Date         : 2023-03-22 18:10:46
+ * @LastEditors  : mingfei.yao
+ * @LastEditTime : 2023-03-22 18:15:42
+ * @FilePath     : \\js_frame_work\\html\\贪吃蛇.html
+ * Copyright (C) 2023 mingfei.yao. All rights reserved.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 400;
+      canvas.height = 400;
+      document.body.appendChild(canvas);
+
+      // Define the snake and its initial position
+      let snake = [{ x: 10, y: 10 }];
+      let direction = 'right';
+
+      // Define the food and its initial position
+      let food = {
+        x: Math.floor(Math.random() * 40),
+        y: Math.floor(Math.random() * 40)
+      };
+
+      // Define the game loop
+      function gameLoop() {
+        // Move the snake
+        let head = { x: snake[0].x, y: snake[0].y };
+        if (direction === 'right') {
+          head.x++;
+        } else if (direction === 'left') {
+          head.x--;
+        } else if (direction === 'up') {
+          head.y--;
+        } else if (direction === 'down') {
+          head.y++;
+        }
+        snake.unshift(head);
+
+        // Check if the snake has collided with the wall
+        if (head.x < 0 || head.x >= 40 || head.y < 0 || head.y >= 40) {
+          alert('Game over!');
+          location.reload();
+        }
+
+        // Check if the snake has collided with itself
+        for (let i = 1; i < snake.length; i++) {
+          if (head.x === snake[i].x && head.y === snake[i].y) {
+            alert('Game over!');
+            location.reload();
+          }
+        }
+
+        // Check if the snake has eaten the food
+        if (head.x === food.x && head.y === food.y) {
+          food = {
+            x: Math.floor(Math.random() * 40),
+            y: Math.floor(Math.random() * 40)
+          };
+        } else {
+          snake.pop();
+        }
+
+        // Draw the snake and the food
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'green';
+        for (let i = 0; i < snake.length; i++) {
+          ctx.fillRect(snake[i].x * 10, snake[i].y * 10, 10, 10);
+        }
+        ctx.fillStyle = 'red';
+        ctx.fillRect(food.x * 10, food.y * 10, 10, 10);
+
+        // Call the game loop again
+        setTimeout(function () {
+          requestAnimationFrame(gameLoop);
+        }, 100);
+
+        document.addEventListener('keydown', function (event) {
+          if (event.keyCode === 37 && direction !== 'right') {
+            direction = 'left';
+          } else if (event.keyCode === 38 && direction !== 'down') {
+            direction = 'up';
+          } else if (event.keyCode === 39 && direction !== 'left') {
+            direction = 'right';
+          } else if (event.keyCode === 40 && direction !== 'up') {
+            direction = 'down';
+          }
+        });
+      }
+      requestAnimationFrame(gameLoop);
+    </script>
+  </body>
+</html>

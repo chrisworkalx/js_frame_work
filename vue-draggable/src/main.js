@@ -4,12 +4,14 @@
  * @Author       : mingfei.yao
  * @Date         : 2022-11-11 11:20:19
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2023-02-14 14:16:32
+ * @LastEditTime : 2023-03-09 15:26:04
  * @FilePath     : \\vue-draggable\\src\\main.js
  * @Copyright (C) 2022 mingfei.yao. All rights reserved.
  */
 import Vue from 'vue';
 import ElementUI, { MessageBox } from 'element-ui';
+// eslint-disable-next-line import/no-unresolved
+import VueMsgXiaoXiaoBoJue from 'vue-msg-xiaoxiaobojue/lib/vue-msg-xiaoxiaobojue.umd';
 import { Updater } from './utils/update';
 import App from './App.vue';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -19,6 +21,7 @@ import store from './store';
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
+Vue.use(VueMsgXiaoXiaoBoJue);
 
 // useSocket();
 

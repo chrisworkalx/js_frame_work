@@ -14,6 +14,7 @@
     "element-ui": "^2.15.12",
     "intro.js": "^6.0.0",
     "vue": "^2.6.14",
+    "vue-msg-xiaoxiaobojue": "^0.1.0",
     "vue-native-websocket": "^2.0.15",
     "vue-router": "^3.5.1",
     "vue2-ace-editor": "^0.0.15",
