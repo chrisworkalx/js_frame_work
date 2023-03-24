@@ -4,13 +4,15 @@
  * @Author       : mingfei.yao
  * @Date         : 2022-11-11 11:20:19
  * @LastEditors  : mingfei.yao
- * @LastEditTime : 2023-02-22 18:51:39
+ * @LastEditTime : 2023-03-23 10:30:07
  * @FilePath     : \\vue-draggable\\src\\router\\index.js
  * @Copyright (C) 2022 mingfei.yao. All rights reserved.
  */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import HomeView from '../views/HomeView.vue';
+import ElSelect from '../views/El-Select.vue';
+import ElSelectDirective from '../views/el-select-directive.vue';
 
 Vue.use(VueRouter);
 
@@ -18,7 +20,9 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    // component: HomeView
+    // component: ElSelect
+    component: ElSelectDirective
   },
   {
     path: '/about',
