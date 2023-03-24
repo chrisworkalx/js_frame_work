@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+/* eslint-disable arrow-body-style */
+>>>>>>> feat: 自定义select
 /* eslint-disable no-param-reassign */
 /**
  * @Description  :
@@ -30,27 +34,43 @@ const config = { attributes: true, childList: true, subtree: true };
 
 const shadowBox = document.createElement('div');
 
-const domProps = Vue.observable({
-  shadowBoxContainer: shadowBox,
-  rowHeight: 34,
-  mark: 0
-});
+const walkBindingValue = (bindingValue = {}) => {
+  return Object.keys(bindingValue).reduce((target, nextKey) => {
+    // console.log('nextKey', nextKey);
+    target[nextKey] = bindingValue[nextKey];
+    return target;
+  }, {});
+};
 
-const walkBindingValue = (bindingValue = {}) =>
-  Object.keys(bindingValue).forEach((nextKey) => {
-    domProps[nextKey] = bindingValue[nextKey];
-  });
-
-function handleScroll() {
+function handleScroll(domProps) {
   if (domProps.disabled) return;
-  const hiddenChildNumbers = Math.round(domProps.scrollContainer.scrollTop / domProps.rowHeight);
+  let topHeightNumber;
+  const transformStr = domProps.transformContainer.style.transform;
+  if (transformStr && domProps.isAutoScroll) {
+    const getTranslateYNumber = transformStr?.match(/(\d+)/)[1];
+    topHeightNumber = getTranslateYNumber;
+  } else {
+    topHeightNumber = domProps.scrollContainer.scrollTop;
+  }
+
+  const hiddenChildNumbers = Math.round(topHeightNumber / domProps.rowHeight);
+  console.log('hiddenChildNumbers', hiddenChildNumbers);
   if (domProps.callback) {
-    domProps.callback(hiddenChildNumbers, (str) => {
-      domProps.transformContainer.style.transform = `translateY(${domProps.scrollContainer.scrollTop}px)`;
+    domProps.callback(hiddenChildNumbers, domProps, (str) => {
+      const topHight = domProps.isAutoScroll
+        ? domProps.transformContainer.style.transform
+        : `translateY(${domProps.scrollContainer.scrollTop}px)`;
+
+      setTimeout(() => {
+        domProps.transformContainer.style.transform = topHight;
+        domProps.isAutoScroll = false;
+      });
     });
   }
-  const wrapperLoadData = (domProps.loadData && debounce(domProps.loadData)) || null;
-  const scrollBottom = domProps.scrollContainer.scrollTop + domProps.scrollContainer.clientHeight;
+  const wrapperLoadData =
+    (domProps.loadData && debounce(domProps.loadData)) || null;
+  const scrollBottom =
+    domProps.scrollContainer.scrollTop + domProps.scrollContainer.clientHeight;
   const remainDistance = domProps.scrollContainer.scrollHeight - scrollBottom;
   if (remainDistance <= domProps.scrollContainer.distance) {
     // 数据加载
@@ -65,30 +85,48 @@ export default {
     // 获取scroll 滚动的容器元素,由参数传入
     // 如果没有传入,则默认绑定指令的元素自己
     // 获取懒加载处理函数 , 以及其他参数
+
     const vm = vnode.context;
-    walkBindingValue(binding.value);
+    const domProps = {
+      ...walkBindingValue(binding.value),
+      shadowBoxContainer: shadowBox,
+      rowHeight: 34,
+      mark: 0
+    };
     if (domProps.scrollBody) {
       domProps.scrollContainer = el.querySelector(domProps.scrollBody) || el;
       domProps.scrollContainer.style.cssText = 'position: relative';
     }
     if (domProps.transformBody) {
       domProps.transformContainer = el.querySelector(domProps.transformBody);
-      domProps.transformContainer.style.cssText = 'position: absolute; width: 100%; left: 0; top: 0;';
+      domProps.transformContainer.style.cssText =
+        'position: absolute; width: 100%; left: 0; top: 0;';
     }
     if (domProps.childNode) {
       domProps.childContainer = el.querySelector(domProps.childNode);
-      domProps.rowHeight = domProps.childContainer.offsetHeight;
+      domProps.rowHeight = domProps.childContainer.offsetHeight || 34;
     }
     observer = new MutationObserver((mutationList, observers) => {
       // eslint-disable-next-line no-restricted-syntax
       for (const mutation of mutationList) {
         if (mutation.type === 'childList') {
           if (mutation.target.className.includes('el-select-dropdown')) {
-            if (domProps.childContainer && domProps.childContainer.offsetHeight) {
-              domProps.rowHeight = domProps.childContainer.offsetHeight;
-              domProps.scrollContainer.style.height = `${domProps.options.length * domProps.rowHeight}px`;
-              shadowBox.style.height = `${domProps.bigList.length * domProps.rowHeight}px`;
-              domProps.scrollContainer.insertBefore(shadowBox, domProps.transformContainer);
+            if (
+              domProps.childContainer &&
+              domProps.childContainer.offsetHeight
+            ) {
+              console.log('初始化');
+              domProps.rowHeight = domProps.childContainer.offsetHeight || 34;
+              domProps.scrollContainer.style.height = `${
+                domProps.options.length * domProps.rowHeight
+              }px`;
+              domProps.shadowBoxContainer.style.height = `${
+                domProps.bigList.length * domProps.rowHeight
+              }px`;
+              domProps.scrollContainer.insertBefore(
+                domProps.shadowBoxContainer,
+                domProps.transformContainer
+              );
             }
           } else {
             // console.log('mutation--else', mutation);
@@ -96,12 +134,17 @@ export default {
         } else if (mutation.type === 'attributes') {
           if (domProps.transformContainer) {
             const transformStr = domProps.transformContainer.style.transform;
-            if (transformStr && mutation.target.className.includes('is-reverse')) {
-              console.log('展开');
+            if (
+              transformStr &&
+              mutation.target.className.includes('is-reverse')
+            ) {
               const getTranslateYNumber = transformStr.match(/(\d+)/)[1];
+
               domProps.disabled = false;
-              domProps.transformDistance = getTranslateYNumber;
-              domProps.scrollContainer.scrollTop = `${getTranslateYNumber}`;
+              domProps.isAutoScroll = true;
+              setTimeout(() => {
+                domProps.scrollContainer.scrollTo(0, getTranslateYNumber);
+              });
             }
           }
         }
@@ -110,15 +153,17 @@ export default {
     observer.observe(el, config);
 
     // 滚动事件监听
-    const onScroll = throttle(
-      handleScroll.bind(this),
-      500
-    );
+    const onScroll = throttle(handleScroll.bind(this, domProps), 500);
 
     // eslint-disable-next-line no-param-reassign
     el[scope] = {
-      el, vm, container: domProps.scrollContainer, onScroll, domProps
+      el,
+      vm,
+      container: domProps.scrollContainer,
+      onScroll,
+      domProps
     };
+    console.log('domProps----初始化', domProps);
 
     if (domProps.scrollContainer && !domProps.disabled) {
       domProps.scrollContainer.addEventListener('scroll', onScroll);
@@ -126,31 +171,54 @@ export default {
   },
   update(el, binding) {
     const {
-      bigList, isFiltered, filterList, options, mark, start, disabled, value
+      bigList,
+      isFiltered,
+      filterList,
+      options,
+      mark,
+      start,
+      disabled,
+      value
     } = binding.value;
+    const { domProps } = el[scope];
     domProps.disabled = disabled;
     domProps.value = value;
     const filterModeRowNumber = filterList.length > 8 ? filterList.length : 8;
     const bigModeRowNumber = bigList.length > 8 ? bigList.length : 8;
     const minHeight = options.length > 8 ? options.length : 8;
     if (
-      isFiltered
-      && domProps.filterList.length !== filterList.length
-      && domProps.mark !== mark) {
-      domProps.mark = mark;
-      domProps.filterList = filterList;
+      isFiltered &&
+      domProps.filterList.length !== filterList.length &&
+      domProps.mark !== mark
+    ) {
+      // console.log('domProps.shadowBoxContainer', domProps.shadowBoxContainer);
+      // console.log('filterModeRowNumber', filterModeRowNumber);
+      // console.log('domProps.shadowBoxContainer', domProps.shadowBoxContainer);
+      // console.log('domProps', domProps);
+
       setTimeout(() => {
-        domProps.shadowBoxContainer.style.height = `${filterModeRowNumber * domProps.rowHeight}px`;
-        domProps.scrollContainer.style.height = `${minHeight * domProps.rowHeight}px`;
+        console.log('查询变化');
+        domProps.mark = mark;
+        domProps.filterList = filterList;
+        domProps.shadowBoxContainer.style.height = `${
+          filterModeRowNumber * domProps.rowHeight
+        }px`;
+        domProps.scrollContainer.style.height = `${
+          minHeight * domProps.rowHeight
+        }px`;
         domProps.scrollContainer.scrollTop = 0;
       });
     } else if (domProps.mark !== mark) {
-      domProps.mark = mark;
-      // 正常搜索
       setTimeout(() => {
+        domProps.mark = mark;
+        // 正常搜索
         const len = filterList.length ? filterModeRowNumber : bigModeRowNumber;
-        domProps.shadowBoxContainer.style.height = `${len * domProps.rowHeight}px`;
-        domProps.scrollContainer.style.height = `${minHeight * domProps.rowHeight}px`;
+        domProps.shadowBoxContainer.style.height = `${
+          len * domProps.rowHeight
+        }px`;
+        domProps.scrollContainer.style.height = `${
+          minHeight * domProps.rowHeight
+        }px`;
       });
     }
   },

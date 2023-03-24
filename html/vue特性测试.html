@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+    <!-- <script src="https://unpkg.com/browse/vue@2.6.14/dist/vue.runtime.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/browse/vue@2.7.14/dist/vue.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/browse/vue@2.6.14/dist/vue.esm.browser.js"></script> -->
+    <!-- <script src="https://unpkg.com/browse/vue@2.6.14/dist/vue.runtime.common.dev.js"></script> -->
+    <!-- <script src="https://unpkg.com/browse/vue@3.2.47/dist/vue.cjs.js"></script> -->
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <h1>{{ text }}</h1>
+        <!-- <label>
+          <span>1</span>
+          <input type="text" v-on:[`${eventname}`]="log" />
+          <br />
+        </label> -->
+        <label for="">
+          <span>2</span>
+          <input type="text" v-on:[eventName]="log" />
+          <!-- <input type="text" v-on:[`${eventName}`]="log" /> -->
+          <!-- <input type="text" v-on:[`${event-name}`]="log" /> -->
+          <br />
+        </label>
+
+        <!-- <label for="">
+          <span>3</span>
+          <input type="text" v-on="eventMaps" />
+          <br />
+        </label> -->
+
+        <my-comp
+          :list="list"
+          :value="childValue"
+          @change-input="changeInput"
+        ></my-comp>
+      </div>
+    </div>
+    <template id="child">
+      <div>
+        <h2>{{ title }}</h2>
+        <div v-for="item in list" :key="item">{{ item }}</div>
+        <input type="text" :value="value" @input="handleInput" />
+        <!-- <input type="text" v-on:[eventName1]="log2" /> -->
+      </div>
+    </template>
+
+    <script>
+      const MyComp = {
+        template: '#child',
+        props: ['list', 'value'],
+        data() {
+          return {
+            title: 'hello111111',
+            eventName1: 'mouseover'
+          };
+        },
+        methods: {
+          handleInput(e) {
+            console.log('e.target.value', e.target.value);
+            this.$emit('change-input', e.target.value);
+          },
+          log2() {
+            console.log('mouseover start');
+          }
+        }
+      };
+      new Vue({
+        el: '#app',
+        data: {
+          text: '测试',
+          childValue: '',
+          eventName: 'focus',
+          'event-name': 'focus', // ====> {event: 'a', name: 'b'}
+          // eventname: 'focus', //正常我们只要自定义这个事件会自动帮我们解析
+          event: 'click',
+          name: 'focus',
+          '-': 'mouseover',
+          list: [1, 2, 3]
+        },
+        computed: {
+          eventMaps() {
+            return {
+              focus: this.log,
+              click: this.clickHandler,
+              mouseover: this.mouseoverHandler,
+              'my-event1': this.eventHandler
+            };
+          }
+        },
+        components: {
+          MyComp
+        },
+        mounted() {
+          this.triggerEvents();
+        },
+        methods: {
+          log() {
+            console.log('eventName is focus');
+          },
+          changeInput(v) {
+            console.log(v, '-----v');
+            this.childValue = v;
+          },
+          clickHandler(eventName) {
+            console.log('原生 click 事件被触发!');
+          },
+          eventHandler(eventName) {
+            console.log(eventName + ' 事件被触发!');
+          },
+          mouseoverHandler(eventName) {
+            console.log('原生 mouseover 事件被触发!');
+          },
+          triggerEvents() {
+            setTimeout(() => {
+              console.log('主动触发my-event1事件');
+              this.$emit('my-event1', 'my-event1');
+            }, 5000);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
