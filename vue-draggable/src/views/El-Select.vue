@@ -65,25 +65,25 @@
 
 <script>
 export default {
-  name: "e-select",
+  name: 'e-select',
   components: {
     addButton: {
-      name: "addButton",
+      name: 'addButton',
       props: {
         cliamantOptions: {
           type: Array,
-          default: () => [],
-        },
+          default: () => []
+        }
       },
       methods: {
         openDialog() {
-          this.$emit("openDialog");
+          this.$emit('openDialog');
         },
         confirmDialog() {
-          this.$emit("confirmDialog");
+          this.$emit('confirmDialog');
         },
         closeDialog() {
-          this.$emit("closeDialog");
+          this.$emit('closeDialog');
         }
       },
       mounted() {
@@ -91,55 +91,55 @@ export default {
       },
       render(h) {
         return h(
-          "div",
+          'div',
           {
             class: {
               addButton: true,
               // hideBottom: !this.cliamantOptions.length
-              hideBottom: true,
-            },
+              hideBottom: true
+            }
           },
           [
             h(
-              "el-button",
+              'el-button',
               {
                 on: {
-                  click: this.openDialog,
-                },
+                  click: this.openDialog
+                }
               },
-              ["新增"]
-            ),
+              ['新增']
+            )
           ]
         );
-      },
-    },
+      }
+    }
   },
   data() {
     return {
       cliamantOptions: [
         {
-          value: "选项1",
-          label: "黄金糕",
+          value: '选项1',
+          label: '黄金糕'
         },
         {
-          value: "选项2",
-          label: "双皮奶",
+          value: '选项2',
+          label: '双皮奶'
         },
         {
-          value: "选项3",
-          label: "蚵仔煎",
+          value: '选项3',
+          label: '蚵仔煎'
         },
         {
-          value: "选项4",
-          label: "龙须面",
+          value: '选项4',
+          label: '龙须面'
         },
         {
-          value: "选项5",
-          label: "北京烤鸭",
-        },
+          value: '选项5',
+          label: '北京烤鸭'
+        }
       ],
       isCreateFormVisible: false,
-      value: "",
+      value: ''
     };
   },
   methods: {
@@ -148,9 +148,9 @@ export default {
     },
 
     handleClick() {
-          console.log("hello");
-        }
-  },
+      console.log('hello');
+    }
+  }
 };
 </script>
 <style scoped lang="scss">

@@ -21,7 +21,8 @@
       <router-link to="/drag">VueDraggable测试</router-link>|
       <router-link to="/elSelect">elSelect</router-link> |
       <router-link to="/elDrag">可拖拽的el-tree</router-link> |
-      <router-link to="/testProps">testProps</router-link>
+      <router-link to="/testProps">testProps</router-link> |
+      <router-link to="/testVueProperty">testVueProperty</router-link>
     </nav>
     <router-view />
   </div>

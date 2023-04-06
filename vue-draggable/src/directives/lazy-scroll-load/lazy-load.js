@@ -67,10 +67,8 @@ function handleScroll(domProps) {
       });
     });
   }
-  const wrapperLoadData =
-    (domProps.loadData && debounce(domProps.loadData)) || null;
-  const scrollBottom =
-    domProps.scrollContainer.scrollTop + domProps.scrollContainer.clientHeight;
+  const wrapperLoadData = (domProps.loadData && debounce(domProps.loadData)) || null;
+  const scrollBottom = domProps.scrollContainer.scrollTop + domProps.scrollContainer.clientHeight;
   const remainDistance = domProps.scrollContainer.scrollHeight - scrollBottom;
   if (remainDistance <= domProps.scrollContainer.distance) {
     // 数据加载
@@ -99,8 +97,7 @@ export default {
     }
     if (domProps.transformBody) {
       domProps.transformContainer = el.querySelector(domProps.transformBody);
-      domProps.transformContainer.style.cssText =
-        'position: absolute; width: 100%; left: 0; top: 0;';
+      domProps.transformContainer.style.cssText = 'position: absolute; width: 100%; left: 0; top: 0;';
     }
     if (domProps.childNode) {
       domProps.childContainer = el.querySelector(domProps.childNode);
@@ -112,8 +109,8 @@ export default {
         if (mutation.type === 'childList') {
           if (mutation.target.className.includes('el-select-dropdown')) {
             if (
-              domProps.childContainer &&
-              domProps.childContainer.offsetHeight
+              domProps.childContainer
+              && domProps.childContainer.offsetHeight
             ) {
               console.log('初始化');
               domProps.rowHeight = domProps.childContainer.offsetHeight || 34;
@@ -135,8 +132,8 @@ export default {
           if (domProps.transformContainer) {
             const transformStr = domProps.transformContainer.style.transform;
             if (
-              transformStr &&
-              mutation.target.className.includes('is-reverse')
+              transformStr
+              && mutation.target.className.includes('is-reverse')
             ) {
               const getTranslateYNumber = transformStr.match(/(\d+)/)[1];
 
@@ -187,9 +184,9 @@ export default {
     const bigModeRowNumber = bigList.length > 8 ? bigList.length : 8;
     const minHeight = options.length > 8 ? options.length : 8;
     if (
-      isFiltered &&
-      domProps.filterList.length !== filterList.length &&
-      domProps.mark !== mark
+      isFiltered
+      && domProps.filterList.length !== filterList.length
+      && domProps.mark !== mark
     ) {
       // console.log('domProps.shadowBoxContainer', domProps.shadowBoxContainer);
       // console.log('filterModeRowNumber', filterModeRowNumber);

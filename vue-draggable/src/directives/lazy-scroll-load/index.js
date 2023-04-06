@@ -10,8 +10,8 @@
  */
 import lazyScrollLoad from './lazy-load';
 
-const install = function(Vue) {
-  if(install.installed) return;
+const install = function (Vue) {
+  if (install.installed) return;
   Vue.directive('lazy-scroll-load', lazyScrollLoad);
   install.installed = true;
 };

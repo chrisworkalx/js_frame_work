@@ -116,7 +116,7 @@ export default {
         transformBody: '.el-select-dropdown__list',
         childNode: '.el-select-dropdown__item',
         callback: (newStartIndex, domProps, cb) => {
-          console.log('newStartIndex', newStartIndex);
+          // console.log('newStartIndex', newStartIndex);
           this.start = newStartIndex;
           this.end = this.start + this.size;
           cb('哈喽');
@@ -141,7 +141,7 @@ export default {
         transformBody: '.el-select-dropdown__list',
         childNode: '.el-select-dropdown__item',
         callback: (newStartIndex, domProps, cb) => {
-          console.log('newStartIndex', newStartIndex);
+          // console.log('newStartIndex', newStartIndex);
           this.start = newStartIndex;
           this.end = this.start + this.size;
           cb('哈喽');
@@ -174,8 +174,8 @@ export default {
     },
     getOptions() {
       let list = [];
-      console.log('this.isFiltered', this.isFiltered);
-      console.log('this.filterList', this.filterList);
+      // console.log('this.isFiltered', this.isFiltered);
+      // console.log('this.filterList', this.filterList);
       if (this.isFiltered) {
         list = this.filterList;
       } else {
@@ -192,7 +192,7 @@ export default {
         const arr = this.bigList.filter((item) => item.label.includes(v));
         this.filterList = arr;
       } else {
-        console.log('not--filtered');
+        // console.log('not--filtered');
         this.filterList = this.bigList;
         this.start = 0;
         this.end = this.size;
@@ -208,7 +208,7 @@ export default {
     },
     handleFocus(e) {
       if (!this.loadConfig2.value) {
-        console.log('focused');
+        // console.log('focused');
         this.loadConfig.disabled = false;
         this.mark = Date.now();
         this.filterList = this.bigList;
