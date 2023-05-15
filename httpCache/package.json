@@ -1,0 +1,19 @@
+{
+  "name": "httpcache",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:server1": "nodemon server1.js",
+    "start:server2": "nodemon server2.js",
+    "start:server3": "nodemon server3.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "crypto-js": "4.1.1",
+    "express": "4.18.2",
+    "nodemon": "2.0.22"
+  }
+}
