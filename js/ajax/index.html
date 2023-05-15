@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实现ajax</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="./ajax.js"></script>
+  </head>
+  <body>
+    <div id="test"></div>
+    <div><button id="ajaxGet">原生ajax get请求</button></div>
+    <br />
+    <div><button id="ajaxPost">原生ajax post请求</button></div>
+    <br />
+    <div><button id="ajaxJsonP">原生ajax jsonp请求</button></div>
+    <br />
+    <div><button id="manualAjaxGet">自定义ajax get请求</button></div>
+    <br />
+    <div><button id="manualAjaxPost">自定义ajax post请求</button></div>
+  </body>
+  <script>
+    const oTest = document.querySelector('#test');
+    ajaxGet.onclick = function () {
+      $.ajax({
+        type: 'get',
+        url: 'https://www.fastmock.site/mock/3277f26b72e3b8aa6de012d30c06ce3f/api/api/getTargetDevice',
+        success: function (response) {
+          console.log('response', response);
+        }
+      });
+    };
+
+    ajaxPost.onclick = function () {
+      //默认this指向这个按钮
+      $.ajax({
+        context: oTest, //改变this指向为otest这个div
+        type: 'post',
+        // contentType: 'application/json', //发送到服务器的数据类型。
+        // beforeSend: function (body) {
+        //   console.log('body', body);
+        //   return body;
+        // },
+        // ifModified: true, //设置http请求缓存 则只有当服务器端的内容与上次请求不一样时，才会发出本次请求
+        headers: {
+          //指定HTTP请求的头信息。
+          a: 1
+        },
+        dataType: 'json', //dataType设置你收到服务器数据的格式。
+        url: 'https://www.fastmock.site/mock/3277f26b72e3b8aa6de012d30c06ce3f/api/prodcut#!method=POST&queryParameters=%5B%5D&body=%7B%0A+%22id%22%3A+1%0A%7D&headers=%5B%5D',
+        data: {
+          id: 1
+        },
+        success: function (res) {
+          console.log($(this).html(res.desc || 'hello'));
+          console.log('res', res);
+        },
+        error: function (e) {
+          // 抛错的钩子函数
+        }
+      });
+    };
+
+    ajaxJsonP.onclick = function () {
+      $.ajax({
+        type: 'get',
+        url: 'https://www.fastmock.site/mock/3277f26b72e3b8aa6de012d30c06ce3f/api/jsonp',
+        dataType: 'jsonp',
+        data: {
+          id: 2
+        },
+        // jsonp: 'callback',
+        jsonpCallback: 'getResponse',
+        success: function () {}
+      });
+    };
+
+    function getResponse(res) {
+      console.log('jsonp返回的的res', res);
+    }
+
+    manualAjaxGet.onclick = function () {
+      new MyAjax({
+        type: 'get',
+        url: 'https://www.fastmock.site/mock/3277f26b72e3b8aa6de012d30c06ce3f/api/api/getTargetDevice',
+        success: function (response) {
+          console.log('自定义get-response', response);
+        }
+      });
+    };
+    manualAjaxPost.onclick = function () {
+      const xhr = new MyAjax({
+        type: 'post',
+        data: {
+          id: 1
+        },
+        url: 'https://www.fastmock.site/mock/3277f26b72e3b8aa6de012d30c06ce3f/api/prodcut#!method=POST&queryParameters=%5B%5D&body=%7B%0A+%22id%22%3A+1%0A%7D&headers=%5B%5D',
+        success: function (response) {
+          console.log('自定义post-response', JSON.parse(response));
+        }
+      });
+      setTimeout(() => {
+        xhr.abort();
+      }, 200);
+    };
+  </script>
+</html>
