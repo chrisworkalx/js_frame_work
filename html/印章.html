@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" id="viewportid" content="width=750,user-scalable=no" />
+        <title></title>
+    </head>
+    <body style="background: aliceblue;font-size: 24px;">
+        <h1>自动扣取图章</h1>
+            <input type="file" id="upload" />
+        </p>
+        <div id="myCanvas">
+            <img width="300" src="" id="show" />
+        </div>
+        <script>
+            // 获取图片中的红色印章Get the Red Seal
+            var GTRS = {
+                // 预处理画布
+                canvas: null,
+                context: null,
+                // 切割点位数组，顺序为开始和结束，
+                cuttingPoint: [{x:0,y:0},{x:0,y:0}],
+                // 设置范围判定值
+                colorRange: 0,
+                // 临时图片
+                myImage: null,
+                // 获取红色印章(只保留红色区间色彩)
+                // 接受URL
+                convertToTransparent: function(URL,callback) {
+                    // 初始化画布
+                    this.canvas = document.createElement("canvas");
+                    this.context = this.canvas.getContext("2d");
+                    let that=this;
+                    this.myImage= new Image();
+                    this.myImage.onload = function() {
+                        that.canvas.width = that.myImage.width;
+                        that.canvas.height = that.myImage.height;
+                        that.context.drawImage(that.myImage, 0, 0);
+                        that.setColorData();
+                        that.exportSeal(callback);
+                    }
+                    this.myImage.src = URL;
+                },
+                // 输出处理后的图片到画布
+                setColorData: function() {
+                    // 像素点
+                    let length = this.canvas.width * this.canvas.height;
+                    // 获取所有色值，每个像素数4个值，R、G、B、A
+                    this.myImage = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+                    for (let i = 0; i < length * 4; i += 4) {
+                        let myRed = this.myImage.data[i];
+                        let myGreen = this.myImage.data[i + 1];
+                        let myBlue = this.myImage.data[i + 2];
+                        if (!this.colorInRange(myRed, myGreen, myBlue)) {
+                            this.myImage.data[i + 3] = 0;
+                        }
+                        if (this.myImage.data[i] > 70) {
+                            this.myImage.data[i] = 230;
+                        }
+                    }
+                    this.context.putImageData(this.myImage, 0, 0);
+                },
+                // *判断是否为红色，方法的核心部分，但是就这2行，还可能有点bug -_-
+                colorInRange: function(red, green, blue) {
+                    if (red >= this.colorRange && green >= this.colorRange && blue >= this.colorRange && ((red - green) > 20)) {
+                        return true;
+                    };
+                    return false;
+                },
+                exportSeal: function(callback) {
+                    // 获取所有像素
+                    let length = this.canvas.width * this.canvas.height;
+                    this.myImage = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+                    this.cuttingPoint[0].y = this.leftPoint(length, this.myImage);
+                    this.cuttingPoint[0].x = this.topPoint(length, this.myImage);
+                    this.cuttingPoint[1].y = this.bootomPoint(length, this.myImage);
+                    this.cuttingPoint[1].x = this.rightPoint(length, this.myImage);
+                    let image = new Image();
+                    let that = this;
+                    image.src = this.canvas.toDataURL("image/png");
+                    image.onload = function() {
+                        let canvas = document.createElement("canvas");
+                        canvas.width = that.cuttingPoint[1].x - that.cuttingPoint[0].x;
+                        canvas.height = that.cuttingPoint[1].y - that.cuttingPoint[0].y;
+                        let context = canvas.getContext("2d");
+                        context.drawImage(image, that.cuttingPoint[0].x, that.cuttingPoint[0].y, canvas.width, canvas.height, 0, 0,
+                            canvas
+                            .width, canvas.height);
+                            if(callback){
+                                callback(canvas.toDataURL());
+                            }
+                         
+                    }
+                },
+                download: function(url) {
+                    let a = document.createElement("a");
+                    a.download = '';
+                    a.href = url;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                },
+                // 切割开始点Y
+                topPoint: function(length, myImage) {
+                    for (let i = 0; i < this.canvas.width; i += 1) {
+                        for (let j = 0; j < this.canvas.height; j++) {
+                            let myRed = this.myImage.data[j * this.canvas.width * 4 + i * 4]
+                            if (myRed >= 10) {
+                                return i;
+                            }
+                        }
+                    }
+                },
+                // 切割开始点X
+                leftPoint: function(length, myImage) {
+ 
+                    for (let i = 0; i < length * 4; i += 4) {
+                        // 获取起点x
+                        let myRed = this.myImage.data[i];
+                        if (myRed >= 10) {
+                            return Math.ceil(i / 4 / this.canvas.width);
+                        }
+                    }
+                },
+                // 切割结束点Y                  
+                bootomPoint: function(length, myImage) {
+                    for (let i = length * 4 - 4; i >= 4; i -= 4) {
+                        let myRed = this.myImage.data[i];
+                        if (myRed >= 10) {
+                            return Math.ceil(i / 4 / this.canvas.width);
+                        }
+                    }
+                },
+                // 切割结束点X
+                rightPoint: function(length, myImage) {
+                    for (let i = this.canvas.width - 1; i > 0; i--) {
+                        for (let j = this.canvas.height; j > 0; j--) {
+                            let myRed = this.myImage.data[(this.canvas.height - j) * this.canvas.width * 4 + i * 4]
+                            if (myRed >= 10) {
+                                return i;
+                            }
+                        }
+                    }
+                }
+            }
+            document.getElementById('upload').addEventListener('change', function(event) {
+                var reads = new FileReader();
+                f = document.getElementById('upload').files[0];
+                reads.readAsDataURL(f);
+                reads.onload = function(e) {
+                    GTRS.convertToTransparent(this.result,function(url){
+                        document.getElementById('show').src=url;
+                    });
+                };
+             
+            });
+        </script>
+    </body>
+</html>
