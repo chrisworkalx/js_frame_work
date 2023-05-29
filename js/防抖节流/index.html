@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>防抖和节流</title>
+    <script src="./index.js"></script>
+  </head>
+  <body>
+    <button onclick="testDebounce(this)">防抖测试</button>
+    <div
+      style="height: 300px; overflow: auto; border: solid 1px #ccc"
+      onscroll="testThrottle()"
+    >
+      <div style="height: 800px"></div>
+    </div>
+  </body>
+  <script>
+    function debounceClick(e) {
+      console.log(e.innerHTML);
+    }
+
+    function throttleScroll() {
+      console.log('scroll');
+    }
+
+    var testDebounce = debounce(debounceClick);
+
+    var testThrottle = throttle(throttleScroll);
+  </script>
+</html>
