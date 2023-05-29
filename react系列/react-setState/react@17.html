@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React17测试</title>
+    <script
+      crossorigin
+      src="https://cdn.bootcdn.net/ajax/libs/react/17.0.2/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://cdn.bootcdn.net/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.js"
+    ></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script type="text/babel">
+    class App extends React.Component {
+      state = {
+        num: 1
+      };
+
+      componentDidMount() {
+        // this.setState({
+        //   num: this.state.num + 1
+        // });
+        // this.setState({
+        //   num: this.state.num + 1
+        // });
+        // this.setState({
+        //   num: this.state.num + 3
+        // });
+
+        //FIXME: 这里是同步了
+        setTimeout(() => {
+          this.setState({
+            num: this.state.num + 1
+          });
+          this.setState({
+            num: this.state.num + 1
+          });
+          this.setState({
+            num: this.state.num + 3
+          });
+          console.log(this.state.num);
+        });
+        this.btnRef.addEventListener('click', this.nativeHandleClick, false);
+      }
+
+      handleClick = () => {
+        this.setState(
+          {
+            num: this.state.num + 1
+          },
+          () => {
+            console.log(this.state.num, '第1次');
+          }
+        );
+        this.setState(
+          {
+            num: this.state.num + 1
+          },
+          () => {
+            console.log(this.state.num, '第2次');
+          }
+        );
+        this.setState(
+          {
+            num: this.state.num + 3
+          },
+          () => {
+            console.log(this.state.num, '第3次');
+          }
+        );
+        console.log(this.state.num);
+      };
+
+      // 这里是同步了
+      nativeHandleClick = () => {
+        this.setState({
+          num: this.state.num + 1
+        });
+        this.setState({
+          num: this.state.num + 1
+        });
+        this.setState({
+          num: this.state.num + 3
+        });
+        console.log(this.state.num); // react版本 17.0.2 输出依然是4
+      };
+
+      renderButtonGrounps = () => {
+        return (
+          <div style={{ display: 'flex', gap: 10 }}>
+            <button onClick={this.handleClick}>react合成事件触发</button>
+            <button ref={(e) => (this.btnRef = e)}>原生点击事件</button>
+          </div>
+        );
+      };
+
+      render() {
+        const { num } = this.state;
+        return (
+          <div>
+            {/* 页面显示2 */}
+            <h1>{num}</h1>
+            {this.renderButtonGrounps()}
+          </div>
+        );
+      }
+    }
+
+    ReactDOM.render(<App />, document.querySelector('#root'));
+  </script>
+</html>
