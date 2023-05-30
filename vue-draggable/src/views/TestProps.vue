@@ -10,7 +10,7 @@
  -->
 <template>
   <div>
-    <TestProvider @changeProvide="changeProvide"/>
+    <TestProvider @changeProvide="changeProvide" />
     <vue-demo></vue-demo>
   </div>
 </template>
@@ -40,7 +40,11 @@ export default {
   methods: {
     changeProvide(v) {
       this.text = v;
-      this.obj.text = v;
+      // this.obj.text = v; //可以更新
+
+      // this.obj = { //不可以更新
+      //   text: v
+      // };
     }
   },
   components: {
