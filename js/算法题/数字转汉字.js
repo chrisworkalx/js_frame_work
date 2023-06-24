@@ -46,7 +46,11 @@ function trans(money, isRounding = false) {
     '十亿',
     '百亿',
     '千亿',
-    '万亿'
+    '万亿',
+    //这里特地加了后面三个单位
+    '十万亿',
+    '百万亿',
+    '千万亿'
   ];
 
   const chineseNumberName = [
@@ -142,7 +146,7 @@ function trans(money, isRounding = false) {
 // const initMoney = 10;
 // const initMoney = 1;
 // const initMoney = 200113;
-const initMoney = 12305601001.12345678;
+// const initMoney = 12305601001.12345678;
 // const initMoney = 1230561.12345678;
 // const initMoney = 123456;
 // const initMoney = 100010001.123;
@@ -150,5 +154,7 @@ const initMoney = 12305601001.12345678;
 // const initMoney = 100010001.002007;
 // const initMoney = 100010001.01020308;
 // const initMoney = 1001001.012345891;
+// const initMoney = 102030000002001;
+const initMoney = 0.3636679;
 
 console.log('trans(initMoney)', trans(initMoney, true));
