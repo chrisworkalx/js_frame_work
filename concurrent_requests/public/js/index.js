@@ -39,6 +39,7 @@ const cacheAsync = (promiseGenerator, symbol) => {
             const response = await promiseGenerator(params);
             console.log('执行接口调用。。。', response);
             // 如果成功了，那么直接resolve掉剩余同样的请求
+            console.log('exector--length', exector.length);
             while (exector.length) {
               //一旦成功递归循环清空栈
               exector.shift().resolve(response); // 清空栈
@@ -110,10 +111,14 @@ $(function () {
     // });
 
     fetch2(2);
+    setTimeout(() => {
+      fetch2(2);
+      fetch2(2);
+    }, 2000);
     fetch2(2);
     fetch2(2);
-    fetch2(2);
-    fetch2(2);
-    fetch2(2);
+    // fetch2(2);
+    // fetch2(2);
+    // fetch2(2);
   }
 });
