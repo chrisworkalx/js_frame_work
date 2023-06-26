@@ -6,15 +6,16 @@
       width="50%"
       title="内层 Dialog"
       :visible.sync="innerVisible"
-      append-to-body>
-        <editor
-          v-model="content"
-          @init="editorInit"
-          :lang="langType"
-          theme="chrome"
-          width="100%"
-          height="100"
-        />
+      append-to-body
+    >
+      <editor
+        v-model="content"
+        @init="editorInit"
+        :lang="langType"
+        theme="chrome"
+        width="100%"
+        height="100"
+      />
     </el-dialog>
     <el-button @click="handleOpenXmlDialog">打开xml弹框</el-button>
     <el-button @click="handleOpenJsonDialog">打开json弹框</el-button>
@@ -64,13 +65,12 @@ export default {
             <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="process_kdhpn89j" />
           </bpmndi:BPMNDiagram>
         </definitions>
-      `
+      `;
       this.innerVisible = true;
     },
     handleOpenJsonDialog() {
       this.content = JSON.stringify(this.jsonStr, null, 4);
-      this.langType = 'json',
-      this.innerVisible = true;
+      (this.langType = 'json'), (this.innerVisible = true);
     }
   }
 };

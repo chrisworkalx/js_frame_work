@@ -24,7 +24,9 @@
       <router-link to="/testProps">testProps</router-link> |
       <router-link to="/testVueProperty">testVueProperty</router-link>
     </nav>
-    <router-view />
+    <error-boundary>
+      <router-view />
+    </error-boundary>
   </div>
 </template>
 
