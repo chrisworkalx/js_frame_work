@@ -1,0 +1,10 @@
+.side {
+  display: flex;
+}
+.side .left {
+  width: 200px;
+}
+
+.side .right {
+  flex: 1
+}

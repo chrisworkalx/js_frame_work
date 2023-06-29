@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import SetStateComp from './setState';
+import Router from './router';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -13,6 +14,16 @@ function App() {
         </button>
         <hr />
         <SetStateComp />
+        <hr />
+        <div
+          style={{
+            height: '10px',
+            width: '100%',
+            background: '#f40',
+            marginBottom: 20
+          }}
+        ></div>
+        {Router}
       </div>
     </>
   );
