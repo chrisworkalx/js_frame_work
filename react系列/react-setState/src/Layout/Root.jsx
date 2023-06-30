@@ -1,5 +1,6 @@
 import { useLoaderData } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
+import MenuLink from './MenuLink';
 import './style.css';
 
 // eslint-disable-next-line react/prop-types
@@ -9,7 +10,7 @@ export default function Root() {
   return (
     <div className="side">
       <div className="left">
-        <h1>我是Root外层包裹组件</h1>
+        <MenuLink />
       </div>
       <div className="right">
         <Outlet />

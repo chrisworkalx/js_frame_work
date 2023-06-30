@@ -3,8 +3,17 @@
 }
 .side .left {
   width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .side .right {
   flex: 1
+}
+.link-active {
+  color: #f40;
+}
+.link-normal {
+  color: #333;
 }

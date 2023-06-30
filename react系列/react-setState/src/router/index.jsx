@@ -9,6 +9,9 @@ import AuthLayout from '../Layout/AuthLayout';
 import Home from '../pages/Home';
 import TestModal from '../pages/TestModal';
 import TestUrlParams from '../pages/TestUrlParams';
+import Hook from '../pages/Hook';
+import AntdDemo from '../pages/Antd';
+import SetStateComp from '../pages/SetState';
 
 const routes = (
   <Route
@@ -30,6 +33,9 @@ const routes = (
     <Route element={<AuthLayout />}>
       <Route path="modal" element={<TestModal />} />
     </Route>
+    <Route path="hook" element={<Hook />} />
+    <Route path="antd" element={<AntdDemo />} />
+    <Route path="state" element={<SetStateComp />} />
   </Route>
 );
 
