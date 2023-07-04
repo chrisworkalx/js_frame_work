@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>grid布局</title>
+    <style>
+      .wrapper {
+        width: 100%;
+        height: 100px;
+        display: grid;
+        grid-template-columns: 200px auto; /*设置每一列的宽度,左200px，右自适应*/
+      }
+      .left {
+        background: red;
+      }
+      .right {
+        background: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="wrapper">
+      <div class="left"></div>
+      <div class="right"></div>
+    </section>
+  </body>
+</html>
