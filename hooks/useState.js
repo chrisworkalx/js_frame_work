@@ -36,6 +36,7 @@ function useState(initialState) {
     if (!fiber.memoizedState) {
       fiber.memoizedState = hook;
     } else {
+      console.log(111111);
       workInProgressHook.next = hook;
     }
     // 移动workInProgressHook指针
@@ -114,6 +115,6 @@ function App() {
   };
 }
 
-// window.app = schedule(); //浏览器调试
+window.app = schedule(); //浏览器调试
 const app = schedule(); //node 调试
-app.click();
+// app.click();
