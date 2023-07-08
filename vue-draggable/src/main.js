@@ -20,11 +20,13 @@ import router from './router';
 import store from './store';
 // import { useSocket } from './websocket';
 import lazyScroll from './directives/lazy-scroll-load';
+import { MessageBox as ToolMessageBox } from './components/MyUI';
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueMsgXiaoXiaoBoJue);
 Vue.use(lazyScroll);
+Vue.use(ToolMessageBox);
 
 Vue.component('ErrorBoundary', {
   data: () => ({ error: null }),
@@ -115,5 +117,3 @@ window.addEventListener('error', (a, b, c) => {
   console.log(a, b, c, '====error event');
   throw new Error(a);
 });
-
-console.log(c);
