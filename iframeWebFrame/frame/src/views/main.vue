@@ -16,6 +16,12 @@
             >{{ item.name }}</el-breadcrumb-item
           >
         </el-breadcrumb>
+        <el-button
+          type="primary"
+          @click="goBack"
+          style="position: absolute; left: 0; top: 0;background-color: red;z-index: 3"
+          >返回</el-button
+        >
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -29,7 +35,8 @@ export default {
   components: {MainHeader,Menu},
   data() {
     return {
-      breadcrumbList: []
+      breadcrumbList: [],
+      rlen: history.length
     }
   },
   watch: {
@@ -46,6 +53,10 @@ export default {
         }
       });
       this.breadcrumbList = breadcrumbList;
+    },
+    goBack() {
+      //TODO: hack为什么
+      this.$router.go(this.rlen-history.length - 2)
     }
   },
   created() {

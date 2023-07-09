@@ -38,9 +38,9 @@ export default {
     }
   },
   methods: {
-    initBreadcrumbData(router:any) {
+    initBreadcrumbData(router) {
       const breadcrumbList = [{path: '/', name: '后台管理系统'}];
-      router.matched.forEach((item:any) => {
+      router.matched.forEach((item) => {
         if(item.path && item.meta.name) {
           breadcrumbList.push({path: item.path, name: item.meta.name});
         }

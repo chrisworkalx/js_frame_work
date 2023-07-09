@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <!-- :key="timer" -->
     <iframe
       :class="{ item: true, cover_item: isCoverIframe }"
       :src="src"
@@ -20,10 +21,13 @@ export default {
       src: undefined,
       isLoadIframe: false, // Iframe是否加载完成
       isCoverIframe: false, // Iframe是否全屏
+      // timer: Date.now(),
+      rlen: history.length,
     };
   },
   watch: {
     $route() {
+      // this.timer = Date.now();
       this.init();
     },
   },
@@ -53,7 +57,7 @@ export default {
       return window.frames['content'];
     },
     replaceState() {
-      // console.log(11111111, location.href);
+      console.log(11111111, location.href);
       // console.log('history.length', history.length);
       window.history.replaceState(
         null,
@@ -84,9 +88,13 @@ export default {
         meta: { orgin, pathName },
       } = this.$route;
       if (this.src === `${orgin}${pathName}`) {
+        console.log('this.src--没变化', this.src);
+
         console.log('name,', name, path);
         this.sendmessage({ path, name });
       } else {
+        console.log('this.src---变化', this.src);
+
         this.src = `${orgin}${pathName}`;
       }
     },
