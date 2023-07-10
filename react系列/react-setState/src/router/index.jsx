@@ -12,6 +12,7 @@ import TestUrlParams from '../pages/TestUrlParams';
 import Hook from '../pages/Hook';
 import AntdDemo from '../pages/Antd';
 import SetStateComp from '../pages/SetState';
+import Lane from '../pages/Lane';
 
 const routes = (
   <Route
@@ -36,6 +37,7 @@ const routes = (
     <Route path="hook" element={<Hook />} />
     <Route path="antd" element={<AntdDemo />} />
     <Route path="state" element={<SetStateComp />} />
+    <Route path="lane" element={<Lane />} />
   </Route>
 );
 

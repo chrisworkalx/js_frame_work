@@ -17,6 +17,10 @@ const routesNames = [
   {
     route: 'antd',
     name: 'Antd组件'
+  },
+  {
+    route: 'lane',
+    name: '测试Lane机制'
   }
 ];
 export default function MenuLink() {

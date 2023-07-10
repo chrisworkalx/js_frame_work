@@ -22,7 +22,7 @@ function onFrameWorkFinished() {
 window.onload = onFrameWorkFinished;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  // <React.StrictMode>
+  <App />
+  // </React.StrictMode>
 );
