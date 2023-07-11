@@ -10,21 +10,7 @@
  -->
 <template>
   <div id="app">
-    <nav class="menu">
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
-      <router-link to="/socket">Socket</router-link>
-      <router-link to="/form">Form</router-link>
-      <router-link to="/formTwo">formTwo</router-link>
-      <router-link to="/process">进度条</router-link>
-      <router-link to="/guide">引导页</router-link>
-      <router-link to="/drag">VueDraggable测试</router-link>
-      <router-link to="/elSelect">elSelect</router-link>
-      <router-link to="/elDrag">可拖拽的el-tree</router-link>
-      <router-link to="/testProps">testProps</router-link>
-      <router-link to="/testVueProperty">testVueProperty</router-link>
-      <router-link to="/iframe">测试iframe</router-link>
-    </nav>
+    <Menu />
     <error-boundary>
       <div class="main">
         <bread-cumb></bread-cumb>
@@ -35,11 +21,13 @@
 </template>
 <script>
 import BreadCumb from './Layout/BreadCumb.vue';
+import Menu from './Layout/Menu.vue';
 
 export default {
   name: 'App',
   components: {
-    BreadCumb
+    BreadCumb,
+    Menu
   }
 };
 </script>
@@ -68,10 +56,6 @@ nav {
     &.router-link-exact-active {
       color: #42b983;
     }
-  }
-  &.menu {
-    display: flex;
-    flex-direction: column;
   }
 }
 </style>

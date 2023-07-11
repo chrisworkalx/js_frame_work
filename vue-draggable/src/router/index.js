@@ -40,7 +40,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Socket.vue')
+      import(/* webpackChunkName: "socket" */ '../views/Socket.vue')
   },
   {
     path: '/form',
@@ -48,7 +48,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Form.vue')
+    component: () => import(/* webpackChunkName: "form" */ '../views/Form.vue')
   },
   {
     path: '/formTwo',
@@ -57,7 +57,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/FormTwo.vue')
+      import(/* webpackChunkName: "formTwo" */ '../views/FormTwo.vue')
   },
   {
     path: '/process',
@@ -66,7 +66,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Process.vue')
+      import(/* webpackChunkName: "process" */ '../views/Process.vue')
   },
   {
     path: '/guide',
@@ -75,7 +75,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Guide.vue')
+      import(/* webpackChunkName: "guide" */ '../views/Guide.vue')
   },
   {
     path: '/drag',
@@ -84,7 +84,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Vue-Dragable.vue')
+      import(/* webpackChunkName: "drag" */ '../views/Vue-Dragable.vue')
   },
   {
     path: '/elSelect',
@@ -93,7 +93,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/El-Select.vue')
+      import(/* webpackChunkName: "'el-select" */ '../views/El-Select.vue')
   },
   {
     path: '/elDrag',
@@ -102,7 +102,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/El-Dragger-tree.vue')
+      import(/* webpackChunkName: "el-drag" */ '../views/El-Dragger-tree.vue')
   },
   {
     path: '/testProps',
@@ -111,7 +111,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/TestProps.vue')
+      import(/* webpackChunkName: "testProps" */ '../views/TestProps.vue')
   },
   {
     path: '/testVueProperty',
@@ -120,7 +120,9 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/vue-property.vue')
+      import(
+        /* webpackChunkName: "testVueProperty" */ '../views/vue-property.vue'
+      )
   },
   {
     path: '/iframe',
@@ -129,7 +131,20 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/Iframe.vue')
+      import(/* webpackChunkName: "iframe" */ '../views/Iframe.vue')
+  },
+  {
+    path: '/watch',
+    name: 'watch',
+    props: {
+      text1: 'basketball',
+      text2: 'apple'
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "watch" */ '../views/watch.vue')
   }
 ];
 
