@@ -2,6 +2,8 @@
   <div class="menu-box">
     <router-link to="/">Home</router-link>
     <router-link to="/ref">Ref用法</router-link>
+    <router-link to="/reactive">Reactive用法</router-link>
+    <router-link to="/computed">Computed用法</router-link>
   </div>
 </template>
 

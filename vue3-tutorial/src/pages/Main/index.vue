@@ -19,6 +19,7 @@ import Menu from '../../Layout/Menu.vue';
   display: flex;
   .router-box {
     flex: 1;
+    overflow: auto;
     padding: 0 10px;
   }
 }

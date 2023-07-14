@@ -2,7 +2,9 @@ import * as VueRouter from 'vue-router';
 import Main from '../pages/Main/index.vue';
 import Home from '../pages/Home/index.vue';
 import Login from '../pages/Login/index.vue';
-import RefPage from '../pages/Ref/index.vue';
+import RefPage from '../pages/Base/Ref/index.vue';
+import ReactivePage from '../pages/Base/ReactTive/index.vue';
+import ComputedPage from '../pages/Base/Computed/index.vue';
 import NotFound from '../pages/NotFound/index.vue';
 
 // TODO:
@@ -41,6 +43,14 @@ const routes = [
       {
         path: 'ref',
         component: RefPage
+      },
+      {
+        path: 'reactive',
+        component: ReactivePage
+      },
+      {
+        path: 'computed',
+        component: ComputedPage
       }
     ]
   },

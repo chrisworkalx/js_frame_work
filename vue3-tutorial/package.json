@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "2.1.0",
     "element-plus": "2.3.7",
     "sass": "1.63.6",
     "unplugin-auto-import": "0.16.6",
