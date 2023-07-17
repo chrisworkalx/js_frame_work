@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import ElementPlus from 'element-plus';
 import Router from './router';
+import Store from './store';
 import 'element-plus/dist/index.css';
 import './style.css';
 
@@ -10,4 +11,9 @@ import BaseComponents from './components/install';
 
 import App from './App.vue';
 
-createApp(App).use(ElementPlus).use(Router).use(BaseComponents).mount('#app');
+createApp(App)
+  .use(ElementPlus)
+  .use(Router)
+  .use(Store)
+  .use(BaseComponents)
+  .mount('#app');

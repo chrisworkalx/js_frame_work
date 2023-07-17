@@ -68,6 +68,10 @@
   </div>
 </template>
 
+<script>
+export default { name: 'Reactive' };
+</script>
+
 <script setup>
 import { reactive, ref, onMounted, nextTick } from 'vue';
 const state = reactive({ count: 0 });

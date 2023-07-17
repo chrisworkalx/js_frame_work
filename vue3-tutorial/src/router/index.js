@@ -2,10 +2,11 @@ import * as VueRouter from 'vue-router';
 import Main from '../pages/Main/index.vue';
 import Home from '../pages/Home/index.vue';
 import Login from '../pages/Login/index.vue';
-import RefPage from '../pages/Base/Ref/index.vue';
-import ReactivePage from '../pages/Base/ReactTive/index.vue';
-import ComputedPage from '../pages/Base/Computed/index.vue';
+// import RefPage from '../pages/Base/Ref/index.vue';
+// import ReactivePage from '../pages/Base/ReactTive/index.vue';
+// import ComputedPage from '../pages/Base/Computed/index.vue';
 import NotFound from '../pages/NotFound/index.vue';
+import store from '../store';
 
 // TODO:
 /**
@@ -15,15 +16,24 @@ import NotFound from '../pages/NotFound/index.vue';
  */
 
 //vite全局模块化引入
-// const pages = import.meta.globEager('../pages/**/*.vue');
+const pages = import.meta.globEager('../pages/Base/**/*index.vue');
 
 // console.log('pages', pages);
 
-// Object.values(pages).forEach((d) => {
-//   console.log('d', d);
-//   // d.default
-//   console.log('d.default.name', d.default.name);
-// });
+const BaseRouters = [];
+
+Object.entries(pages).forEach(([k, d]) => {
+  // console.log('d', d);
+  // console.log('d.default', d.default);
+  // console.log('k', k);
+  // console.log('d.default.name', d.default.name);
+  BaseRouters.push({
+    path: d.default.name.toLowerCase(),
+    component: d.default
+  });
+
+  store.dispatch('collectMeuns', { path: d.default.name.toLowerCase() });
+});
 
 //这里需要做一个鉴权登陆
 
@@ -40,18 +50,7 @@ const routes = [
         path: 'home',
         component: Home
       },
-      {
-        path: 'ref',
-        component: RefPage
-      },
-      {
-        path: 'reactive',
-        component: ReactivePage
-      },
-      {
-        path: 'computed',
-        component: ComputedPage
-      }
+      ...BaseRouters
     ]
   },
   { path: '/login', component: Login },

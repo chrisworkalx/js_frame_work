@@ -1,7 +1,20 @@
 <template>
   <div class="count">
-    <span class="left-label" @click="handleClick" v-html="compileTitle"></span>
-    <div :class="[props.isShowBorder && isHasChildDOM ? 'isShowBorder' : '']">
+    <span
+      class="left-label"
+      @click="handleClick"
+      @mouseenter="isSetRedColor = true"
+      @mouseleave="isSetRedColor = false"
+      v-html="compileTitle"
+    ></span>
+    <div
+      :class="[
+        props.isShowBorder && isHasChildDOM ? 'isShowBorder' : '',
+        {
+          content: isSetRedColor
+        }
+      ]"
+    >
       <slot></slot>
     </div>
   </div>
@@ -40,6 +53,8 @@ const isHasChildDOM = computed(() => {
 
 // console.log('slots', slots);
 
+const isSetRedColor = ref(false);
+
 const reg = /<(red|green|blue|random)>(.*?)<\/\1>/g;
 
 const getRandomNum = () => Math.floor(Math.random() * 255);
@@ -47,11 +62,20 @@ const getRandomNum = () => Math.floor(Math.random() * 255);
 const randomColor = () =>
   `rgb(${getRandomNum()}, ${getRandomNum()}, ${getRandomNum()})`;
 
+const transferTargetStr = (str) => {
+  if (reg.test(str)) {
+    return str.replace(reg, (_, $1, $2) => {
+      const random_color = $1.includes('random') ? randomColor() : $1;
+      return `<span style="color: ${random_color};font-size: 20px;">${transferTargetStr(
+        $2
+      )}</span>`;
+    });
+  }
+  return str;
+};
+
 const compileTitle = computed(() => {
-  return props.title.replace(reg, (_, $1, $2) => {
-    const random_color = $1.includes('random') ? randomColor() : $1;
-    return `<span style="color: ${random_color};font-size: 20px;">${$2}</span>`;
-  });
+  return transferTargetStr(props.title);
 });
 
 const emit = defineEmits(['test']);
@@ -59,6 +83,8 @@ const emit = defineEmits(['test']);
 const handleClick = () => {
   emit('test');
 };
+
+const redColor = '#f40';
 </script>
 
 <style lang="scss" scoped>
@@ -72,14 +98,15 @@ const handleClick = () => {
     color: skyblue;
     background-color: antiquewhite;
     border-radius: 4px;
+    min-width: 140px;
     padding: 4px;
-  }
-  &:hover {
-    color: #f40;
   }
   .isShowBorder {
     border: dashed 1px #f99;
     padding: 10px;
+    &.content {
+      color: v-bind(redColor);
+    }
   }
 }
 </style>

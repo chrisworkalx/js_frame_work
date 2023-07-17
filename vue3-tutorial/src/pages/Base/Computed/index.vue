@@ -36,6 +36,10 @@
   </left-title>
 </template>
 
+<script>
+export default { name: 'Computed' };
+</script>
+
 <script setup>
 import { ref, reactive, computed } from 'vue';
 import SearchBar from './SearchBar.vue';
