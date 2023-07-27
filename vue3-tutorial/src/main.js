@@ -11,9 +11,12 @@ import BaseComponents from './components/install';
 
 import App from './App.vue';
 
-createApp(App)
-  .use(ElementPlus)
-  .use(Router)
-  .use(Store)
-  .use(BaseComponents)
-  .mount('#app');
+const app = createApp(App);
+
+app.config.globalProperties.$cacheGrounp = {
+  name: 'cached',
+  type: 'global',
+  value: 100
+};
+
+app.use(ElementPlus).use(Router).use(Store).use(BaseComponents).mount('#app');

@@ -6,6 +6,7 @@ import Login from '../pages/Login/index.vue';
 // import ReactivePage from '../pages/Base/ReactTive/index.vue';
 // import ComputedPage from '../pages/Base/Computed/index.vue';
 import NotFound from '../pages/NotFound/index.vue';
+import DeepComp from '../pages/DeepComponent/index.vue';
 import store from '../store';
 
 // TODO:
@@ -16,24 +17,47 @@ import store from '../store';
  */
 
 //vite全局模块化引入
-const pages = import.meta.globEager('../pages/Base/**/*index.vue');
 
-// console.log('pages', pages);
+//基础页面获取
+const basePages = import.meta.globEager('../pages/Base/**/*index.vue');
+//高级页面获取
+const advancedPages = import.meta.globEager(
+  '../pages/AdvancedComp/**/*index.vue'
+);
 
-const BaseRouters = [];
+function getTargetRoutePage(pages, type, cb) {
+  return Object.entries(pages).reduce((prev, [_, d]) => {
+    prev.push({
+      path: d.default.name.toLowerCase(),
+      component: d.default
+    });
+    store.dispatch('collectMeuns', {
+      path: d.default.name.toLowerCase(),
+      type
+    });
+    if (cb && typeof cb === 'function') {
+      cb(d);
+    }
+    return prev;
+  }, []);
+}
 
-Object.entries(pages).forEach(([k, d]) => {
-  // console.log('d', d);
-  // console.log('d.default', d.default);
-  // console.log('k', k);
-  // console.log('d.default.name', d.default.name);
-  BaseRouters.push({
-    path: d.default.name.toLowerCase(),
-    component: d.default
-  });
+const BaseRouters = getTargetRoutePage(basePages, 'base');
 
-  store.dispatch('collectMeuns', { path: d.default.name.toLowerCase() });
-});
+const AdvancedRouters = getTargetRoutePage(advancedPages, 'advance');
+
+// Object.entries(basePages).forEach(([k, d]) => {
+// console.log('d', d);
+// console.log('d.default', d.default);
+// console.log('k', k);
+// console.log('d.default.name', d.default.name);
+// BaseRouters.push({
+//   path: d.default.name.toLowerCase(),
+//   component: d.default
+// });
+
+// store.dispatch('collectMeuns', { path: d.default.name.toLowerCase() });
+// });
 
 //这里需要做一个鉴权登陆
 
@@ -50,7 +74,12 @@ const routes = [
         path: 'home',
         component: Home
       },
-      ...BaseRouters
+      ...BaseRouters,
+      ...AdvancedRouters,
+      {
+        path: 'deepComp',
+        component: DeepComp
+      }
     ]
   },
   { path: '/login', component: Login },

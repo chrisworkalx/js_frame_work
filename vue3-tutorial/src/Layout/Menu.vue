@@ -1,24 +1,14 @@
 <template>
   <div class="menu-box">
-    <router-link to="/home" active-class="active-menu"
-      >跳转到->Home</router-link
-    >
-    <router-link
-      active-class="active-menu"
-      v-for="item in menus"
-      :to="'/' + item.path"
-      :key="item.path"
-      >{{ '跳转到->' + item.path }}</router-link
-    >
+    <app-link to="/home">跳转到->Home</app-link>
+    <app-link to="/deepComp">跳转到->deepcomp</app-link>
+    <render-base-route type="base" sub-title="基础组件"></render-base-route>
+    <render-base-route type="advance" sub-title="高级组件"></render-base-route>
   </div>
 </template>
 
 <script setup>
-import { useStore } from 'vuex';
-
-const store = useStore();
-
-const menus = store.state.menus;
+import RenderBaseRoute from './RenderBaseRoute.vue';
 </script>
 
 <style lang="scss" scoped>
@@ -27,10 +17,6 @@ const menus = store.state.menus;
   display: flex;
   flex-direction: column;
   background-color: skyblue;
-  .active-menu {
-    color: red;
-    font-size: 20px;
-    font-weight: bold;
-  }
+  text-indent: 1em;
 }
 </style>
