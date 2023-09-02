@@ -3,6 +3,9 @@
   <div>
     <el-button type="primary">ele-plus-primary</el-button>
   </div>
+  <div style="margin-top: 200px; background: red; color: #fff">
+    charles代理测试
+  </div>
 </template>
 
 <script>
