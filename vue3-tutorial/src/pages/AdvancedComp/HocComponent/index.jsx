@@ -8,6 +8,7 @@ import HocExtend from './baseHoc/HocExtend';
 import BaseHocOne from './baseHoc/HocOne';
 import BaseHocTwo from './baseHoc/HocTwo';
 import HocAuth from './baseHoc/HocAuth';
+import HocSlot from './baseHoc/HocSlot';
 
 const HocPopsTransfer = BaseHocOne(PopsTransfer);
 const HocLoadingStatus = BaseHocTwo(LoadingStatus);
@@ -68,9 +69,23 @@ export default {
           />
           <HocExtend
             v-slots={{
-              dynamic: (props) => {
-                console.log(props, ';-------prop');
-                return <span>dynamic2</span>;
+              // dynamic: () => {
+              //   //在这里重写slot:dynamic
+              //   return (
+              //     <div>
+              //       <span>goods</span>
+              //     </div>
+              //   );
+              // },
+              dynamic_one: (props) => {
+                // console.log(props, '------prop');
+                return (
+                  <>
+                    <span>Dynamic_Hoc_extend</span>
+                    <span>🌞</span>
+                    <span>{props?.user}</span>
+                  </>
+                );
               },
               list: (props) => {
                 return (
@@ -85,6 +100,17 @@ export default {
           >
             <span>默认插槽2</span>
           </HocExtend>
+          <HocSlot
+            v-slots={{
+              dynamic: (props) => {
+                return (
+                  <p style={{ background: '#f40', color: '#fff' }}>
+                    年龄：{props.age}
+                  </p>
+                );
+              }
+            }}
+          ></HocSlot>
         </div>
       );
     };
