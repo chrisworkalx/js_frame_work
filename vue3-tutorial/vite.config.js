@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import VueJsx from '@vitejs/plugin-vue-jsx'; //支持jsx语法
 
 //自动导入入element-plus组件
 import AutoImport from 'unplugin-auto-import/vite';
@@ -30,6 +31,7 @@ export default defineConfig(({ command, mode }) => {
     },
     plugins: [
       vue(),
+      VueJsx(),
       AutoImport({
         resolvers: [ElementPlusResolver()]
       }),

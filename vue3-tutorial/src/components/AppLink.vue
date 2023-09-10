@@ -1,5 +1,11 @@
 <template>
-  <a v-if="isExternalLink" v-bind="$attrs" :href="to" target="_blank">
+  <a
+    v-if="isExternalLink"
+    v-bind="$attrs"
+    :href="to"
+    target="_blank"
+    ref="aRef"
+  >
     <slot />
   </a>
   <router-link v-else v-bind="$props" custom>
@@ -9,6 +15,7 @@
         :href="href"
         @click="navigate"
         :class="isActive ? activeClass : inactiveClass"
+        ref="aRef"
       >
         <slot />
       </a>
@@ -47,6 +54,12 @@ export default {
   },
   mounted() {
     // console.log('this.$el', this.$el);
+    // console.log('this.$refs.aRef', this.$refs.aRef);
+  },
+  methods: {
+    getOffsetHeight() {
+      return this.$refs.aRef ? this.$refs.aRef.offsetHeight : 40;
+    }
   }
 };
 </script>

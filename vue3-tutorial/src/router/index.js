@@ -22,7 +22,7 @@ import store from '../store';
 const basePages = import.meta.globEager('../pages/Base/**/*index.vue');
 //高级页面获取
 const advancedPages = import.meta.globEager(
-  '../pages/AdvancedComp/**/*index.vue'
+  '../pages/AdvancedComp/**/*index.*'
 );
 
 function getTargetRoutePage(pages, type, cb) {

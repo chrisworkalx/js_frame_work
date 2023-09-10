@@ -14,9 +14,8 @@
         v-for="item in menus"
         :to="'/' + item.path"
         :key="item.path"
-        :height="40"
         ref="collectMenus"
-        >{{ '跳转到->' + item.path }}</app-link
+        >{{ '跳转到➡️' + item.path }}</app-link
       >
     </div>
   </Transition>
@@ -57,7 +56,8 @@ onMounted(() => {
   // console.log('collectMenus.value', collectMenus.value);
 
   allSubMenusHeight.value = collectMenus.value.reduce((prev, next) => {
-    return prev + next.height;
+    // console.log(next, '===next');
+    return prev + (next?.getOffsetHeight() || next.height);
   }, allSubMenusHeight.value);
 });
 </script>

@@ -9,6 +9,10 @@ import './style.css';
 import BaseComponents from './components/install';
 //=============自定义的全局组件  over  =================/
 
+//=============自定义的全局指令 start =================/
+import BaseDirectives from './directives/install';
+//=============自定义的全局指令  over  =================/
+
 import App from './App.vue';
 
 const app = createApp(App);
@@ -19,4 +23,10 @@ app.config.globalProperties.$cacheGrounp = {
   value: 100
 };
 
-app.use(ElementPlus).use(Router).use(Store).use(BaseComponents).mount('#app');
+app
+  .use(ElementPlus)
+  .use(Router)
+  .use(Store)
+  .use(BaseComponents)
+  .use(BaseDirectives)
+  .mount('#app');
