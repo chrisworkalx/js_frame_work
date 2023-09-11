@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>支持某个请求可打断</title>
+  </head>
+  <body>
+    <script>
+      const _Promise = Promise;
+      function _request() {
+        return new Promise((res, rej) =>
+          setTimeout(() => {
+            res(123);
+          }, 3000)
+        );
+      }
+
+      // 结果一直出现这个问题 https://github.com/nodejs/node/issues/13678
+      function createPauseControllerPromise() {
+        const result = {
+          isPause: false,
+          resolveWhenResume: false,
+          resolve(value) {},
+          pause() {
+            this.isPause = true;
+          },
+          resume() {
+            if (!this.isPause) return;
+            this.isPause = false;
+            if (this.resolveWhenResume) {
+              this.resolve();
+            }
+          },
+          promise: Promise.resolve()
+        };
+        const promise = new Promise((res) => {
+          result.resolve = res;
+        });
+        result.promise = promise;
+
+        return result;
+      }
+
+      function requestWithPauseControl(request) {
+        const controller = createPauseControllerPromise();
+
+        const controlRequest = request()
+          .then((data) => {
+            //必须等待三秒才会执行这里
+            if (!controller.isPause) {
+              //这里相当于架设一层controller控制器
+              //第一次因为controller.isPause是false状态因此会执行另外一个promise（即controller.promise让变为fullfilled状态 方便后续promise.all通过）
+              console.log('第一次，当controller.isPause为false时候触发');
+              controller.resolve();
+            }
+            return data;
+          })
+          .finally(() => {
+            controller.resolveWhenResume = true;
+          });
+
+        const result = _Promise
+          .all([controlRequest, controller.promise])
+          .then((data) => {
+            //Promise.all 必须等待所有的任务都完成才会执行
+            //因此 controlRequest已经完成了
+            //而 controller.promise这个promise函数还在pending状态
+            controller.resolve(); //避免因setTimeout导致promise一直被引用无法释放而造成的内存泄露
+            return data[0];
+          });
+
+        _Promise.prototype.pause = controller.pause.bind(controller);
+        _Promise.prototype.resume = controller.resume.bind(controller);
+
+        return result;
+      }
+
+      // result是一个promise实例
+      const result = requestWithPauseControl(_request).then((data) => {
+        console.log(data, '====here');
+      });
+
+      console.log('result', result);
+
+      result.pause(); //暂停等待
+
+      setTimeout(() => {
+        console.log('开启恢复');
+        result.resume();
+      }, 5000);
+    </script>
+  </body>
+</html>
