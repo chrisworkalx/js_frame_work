@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      div {
+        height: 100px;
+      }
+      .container {
+        display: flex;
+      }
+      .left,
+      .right {
+        width: 200px;
+        background: #66a4bd;
+      }
+      .middle {
+        flex: 1;
+        background: gray;
+      }
+      .tip::first-letter {
+        font-size: 30px;
+        text-transform: uppercase;
+        color: red !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left">left</div>
+      <div class="middle">middle</div>
+      <div class="right">right</div>
+    </div>
+
+    <div class="tip" style="color: blue">
+      notice:这个方法看起来是不是很简单，没错它真的非常简单，都不需要动脑子，简简单单两行代码就能搞定。but！它存在一个问题，这个方法是先加载左边容器的，中间容器加载。不知道大家在上网的时候有没有发现过，有些页面左右两边的都是广告，重要内容都在中间，那么当我们如果使用这个方法来布局的时候，最先出来的是广告，那你愿意吗？我们肯定是想先看到中间的主要内容，两边广告什么时候出现谁在意呢？
+      所以为了优化这个问题，就出现了经典的 圣杯 和 双飞翼
+      布局，它们的目的就是为了在HTML结构上，中间栏在最前面保证了最先渲染中间提升性能
+    </div>
+
+    <!-- /*首字母大写*/
+.a {text-transform:capitalize;} 
+/*全都是大写*/
+.b {text-transform:uppercase;} 
+/*全都是小写*/
+.c {text-transform:lowercase;} -->
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>圣杯</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        height: 100px;
+        padding: 0 200px;
+      }
+      .middle,
+      .left,
+      .right {
+        height: 100%;
+        float: left;
+      }
+      .middle {
+        width: 100%;
+        background: gray;
+      }
+      .left {
+        width: 200px;
+        background: #76d1ea;
+        position: relative;
+        margin-left: -100%;
+        left: -200px;
+
+        /* margin-left: calc(-100% - 200px); 
+        可以平替position: relative;
+        margin-left: -100%;
+        left: -200px; */
+      }
+      .right {
+        width: 200px;
+        background: #76d1ea;
+        position: relative;
+        margin-right: -200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="middle">middle</div>
+      <div class="left">left</div>
+      <div class="right">right</div>
+    </div>
+  </body>
+</html>
+
+<!-- 不过这样布局有一个问题就是：有一个最小宽度，当页面小于最小宽度时布局就会乱掉。 
+“由于设置了相对定位，所以当left原来的位置和right的位置产生重叠时，
+由于浮动的原因一行放不下就会换行” 。所以布局就被打乱了，使用双飞翼布局就可以避免这个问题。 -->
