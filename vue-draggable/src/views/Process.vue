@@ -11,6 +11,7 @@
 <template>
   <div>
     <h1>进度条展示</h1>
+    <el-button @click="goToFormPage">replace当前页面</el-button>
     <el-progress :percentage="percentage"></el-progress>
     <div class="btns-box">
       <el-button @click="changePercentage(30)" type="primary">30%</el-button>
@@ -48,7 +49,34 @@ export default {
   //   }
   // },
   methods: {
+    goToFormPage() {
+      // const routeProps = this.$router.resolve({
+      //   path: '/bpmn/abc',
+      //   query: {
+      //     tid: '213213'
+      //   }
+      // });
+
+      console.log('this.$router.push', this.$router.push);
+
+      // console.log('routeProps', routeProps);
+      this.$router.push(
+        {
+          path: this.$route.path,
+          query: {
+            name: 'lucy'
+          }
+        },
+        (res) => {
+          console.log(res, '===res');
+        },
+        (e) => {
+          console.log(e, '==err');
+        }
+      );
+    },
     initTimer(step = 0.01, total = 100, scale = 1000) {
+      console.log('初始化--------');
       this.timer = setInterval(() => {
         const addPercentage = parseFloat((this.percentage + step).toFixed(2));
         const isExceed = addPercentage >= total;

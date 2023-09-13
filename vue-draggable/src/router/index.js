@@ -154,4 +154,36 @@ const router = new VueRouter({
   routes
 });
 
+const rewritesRouterMethods = {
+  push: VueRouter.prototype.push,
+  replace: VueRouter.prototype.replace
+};
+
+['push', 'replace'].forEach((k) => {
+  VueRouter.prototype[k] = function rewrite(
+    location,
+    onComplete = () => {},
+    onError = () => {}
+  ) {
+    // const name = `route${k.replace(/(\w)(\w+)/g, (_, $1, $2, ...rest) => {
+    //   console.log($1, '==$1');
+    //   return $1.toUpperCase() + $2;
+    // })}`;
+
+    // console.log(name, '===name');
+    // routerPush.call(this, location)默认返回promise
+    return rewritesRouterMethods[k]
+      .call(this, location)
+      .then((res) => {
+        onComplete(res);
+      })
+      .catch((err) => {
+        onError(err);
+        return null;
+      });
+  };
+
+  console.log('VueRouter', VueRouter);
+});
+
 export default router;
