@@ -14,6 +14,33 @@ import HomeView from '../views/HomeView.vue';
 import ElSelect from '../views/El-Select.vue';
 import ElSelectDirective from '../views/el-select-directive.vue';
 
+console.log('VueRouter.prototype.push', VueRouter.prototype.push);
+function rewriteRouterPrototype() {
+  const rewritesRouterMethods = {
+    push: VueRouter.prototype.push,
+    replace: VueRouter.prototype.replace
+  };
+
+  ['push', 'replace'].forEach((k) => {
+    VueRouter.prototype[k] = function _rewrite(
+      location,
+      onComplete = () => {},
+      onError = () => {}
+    ) {
+      return rewritesRouterMethods[k]
+        .call(this, location)
+        .then((res) => {
+          onComplete(res);
+          return res;
+        })
+        .catch((err) => {
+          onError(err);
+          return err;
+        });
+    };
+  });
+}
+rewriteRouterPrototype();
 Vue.use(VueRouter);
 
 const routes = [
@@ -152,38 +179,6 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-});
-
-const rewritesRouterMethods = {
-  push: VueRouter.prototype.push,
-  replace: VueRouter.prototype.replace
-};
-
-['push', 'replace'].forEach((k) => {
-  VueRouter.prototype[k] = function rewrite(
-    location,
-    onComplete = () => {},
-    onError = () => {}
-  ) {
-    // const name = `route${k.replace(/(\w)(\w+)/g, (_, $1, $2, ...rest) => {
-    //   console.log($1, '==$1');
-    //   return $1.toUpperCase() + $2;
-    // })}`;
-
-    // console.log(name, '===name');
-    // routerPush.call(this, location)默认返回promise
-    return rewritesRouterMethods[k]
-      .call(this, location)
-      .then((res) => {
-        onComplete(res);
-      })
-      .catch((err) => {
-        onError(err);
-        return null;
-      });
-  };
-
-  console.log('VueRouter', VueRouter);
 });
 
 export default router;

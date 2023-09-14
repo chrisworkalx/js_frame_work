@@ -57,9 +57,10 @@ export default {
       //   }
       // });
 
-      console.log('this.$router.push', this.$router.push);
+      // console.log('this.$router.push', this.$router.push);
 
       // console.log('routeProps', routeProps);
+      console.log('this.$route.path', this.$route.path);
       this.$router.push(
         {
           path: this.$route.path,
@@ -68,7 +69,7 @@ export default {
           }
         },
         (res) => {
-          console.log(res, '===res');
+          console.log(res, '====res');
         },
         (e) => {
           console.log(e, '==err');

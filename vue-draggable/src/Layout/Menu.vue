@@ -6,6 +6,7 @@
     <router-link to="/form">Form</router-link>
     <router-link to="/formTwo">formTwo</router-link>
     <router-link to="/process">进度条</router-link>
+    <button @click="goToProcess">进度条1111</button>
     <router-link to="/guide">引导页</router-link>
     <router-link to="/drag">VueDraggable测试</router-link>
     <router-link to="/elSelect">elSelect</router-link>
@@ -19,7 +20,12 @@
 
 <script>
 export default {
-  name: 'M-enu'
+  name: 'M-enu',
+  methods: {
+    goToProcess() {
+      this.$router.push('/process');
+    }
+  }
 };
 </script>
 
