@@ -8,8 +8,8 @@
       <router-link to="/jsx-slot" exact-active-class="active-link"
         >jsx插槽</router-link
       >
-      <router-link to="/about" exact-active-class="active-link"
-        >About</router-link
+      <router-link to="/throttle" exact-active-class="active-link"
+        >Hoc_Throttle使用</router-link
       >
     </nav>
   </div>

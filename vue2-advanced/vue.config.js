@@ -5,5 +5,6 @@ module.exports = defineConfig({
     client: {
       overlay: false // 页面eslint报错问题先忽略
     }
-  }
+  },
+  lintOnSave: false
 });

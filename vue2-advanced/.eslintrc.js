@@ -3,10 +3,17 @@ module.exports = {
   env: {
     node: true
   },
-  extends: ['plugin:vue/essential', 'eslint:recommended'],
+  extends: [
+    'plugin:vue/essential',
+    'eslint:recommended',
+    '@vue/babel-preset-jsx'
+  ],
   parserOptions: {
     parser: '@babel/eslint-parser',
-    requireConfigFile: false
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    requireConfigFile: false,
+    allowImportExportEverywhere: true
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

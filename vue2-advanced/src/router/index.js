@@ -13,7 +13,13 @@ const routes = [
     path: '/jsx-slot',
     name: 'JsxSlot',
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/JsxSlot.vue')
+      import(/* webpackChunkName: "jsxSlot" */ '../views/BaseJsxSlot/index.vue')
+  },
+  {
+    path: '/throttle',
+    name: 'Throttle',
+    component: () =>
+      import(/* webpackChunkName: "throttle" */ '../views/Throttle/index.vue')
   }
 ];
 
