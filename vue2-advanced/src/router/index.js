@@ -26,6 +26,12 @@ const routes = [
     name: 'DynamicForm',
     component: () =>
       import(/* webpackChunkName: "dynamicForm" */ '../views/Form/index.vue')
+  },
+  {
+    path: '/pop-over',
+    name: 'PopOver',
+    component: () =>
+      import(/* webpackChunkName: "popOver" */ '../views/PopOver/index.vue')
   }
 ];
 

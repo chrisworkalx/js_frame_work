@@ -13,9 +13,18 @@ import './style/base.css';
 import BaseComponents from './components/index';
 // ==========自定义组件全局注册 over ===============/
 
+// ==========特殊几个组件注册 start ===============/
+import MessageBox from './components/MessageBox';
+import Toast from './components/Toast';
+// ==========特殊几个组件注册 over ===============/
+
 Vue.config.productionTip = false;
 
 Vue.use(BaseComponents);
+
+Vue.use(MessageBox);
+
+Vue.use(Toast);
 
 Vue.use(ElementUI);
 

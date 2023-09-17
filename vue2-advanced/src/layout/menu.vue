@@ -14,6 +14,9 @@
       <router-link to="/dynamic-form" exact-active-class="active-link"
         >Form验证</router-link
       >
+      <router-link to="/pop-over" exact-active-class="active-link"
+        >弹框验证</router-link
+      >
     </nav>
   </div>
 </template>
