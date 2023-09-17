@@ -62,57 +62,66 @@ export default {
   },
   // render函数直接返回slot的vnode，避免外层添加包裹元素
   render() {
-    const vnode = this.$slots.default; //遍历所有子节点
+    const _vnode = this.$slots.default; //遍历所有子节点
+    // console.log('_vnode', _vnode);
     // console.log('vnode', vnode);
     this._eventKeys?.forEach((key) => {
       //获取当前vnode 自身的事件
-      if (vnode && vnode.length) {
-        //如果节点存在
-        vnode.forEach((n) => {
-          // console.log('n', n);
-          const getTagetEvents = this.isOriginHtmlNode(n)
-            ? n.data.on
-            : n.componentOptions.listeners;
-          const target = this.isOriginHtmlNode(n)
-            ? n.data.on[key]
-            : n.componentOptions.listeners[key];
-          if (this.throttledEventsMap[key]) {
-            // 默认存储一个表类型
-            // this.throttledEventsMap = {
-            //   originEvent: target,
-            //   transEvent: fn,
-            // }
-            const getTransEventObj = this.throttledEventsMap[key].find(
-              (fn) => fn.originEvent === target
-            );
-            if (getTransEventObj) {
-              getTagetEvents[key] = getTransEventObj.transEvent;
+      const loopEvent = (vnode) => {
+        if (vnode && vnode.length) {
+          //如果节点存在
+          vnode.forEach((n) => {
+            if (n.children) {
+              //如果有子节点递归
+              // console.log('vnode.children', n.children);
+              loopEvent(n.children);
+            }
+            const getTagetEvents = this.isOriginHtmlNode(n)
+              ? n.data?.on
+              : n.componentOptions?.listeners;
+            const target = this.isOriginHtmlNode(n)
+              ? n.data?.on[key]
+              : n.componentOptions?.listeners[key];
+            if (this.throttledEventsMap[key]) {
+              // 默认存储一个表类型
+              // this.throttledEventsMap = {
+              //   originEvent: target,
+              //   transEvent: fn,
+              // }
+              const getTransEventObj = this.throttledEventsMap[key].find(
+                (fn) => fn.originEvent === target
+              );
+              if (getTransEventObj) {
+                getTagetEvents[key] = getTransEventObj.transEvent;
+              } else if (target) {
+                this.throttledEventsMap[key].push({
+                  key,
+                  originEvent: target,
+                  transEvent: this._throttle(target, this.time, n, key)
+                });
+                getTagetEvents[key] = this.throttledEventsMap[key].find(
+                  (item) => item.originEvent === target
+                ).transEvent;
+              }
             } else if (target) {
-              this.throttledEventsMap[key].push({
-                key,
-                originEvent: target,
-                transEvent: this._throttle(target, this.time, n, key)
-              });
+              this.throttledEventsMap[key] = [
+                {
+                  key,
+                  originEvent: target,
+                  transEvent: this._throttle(target, this.time, n, key)
+                }
+              ];
               getTagetEvents[key] = this.throttledEventsMap[key].find(
                 (item) => item.originEvent === target
               ).transEvent;
             }
-          } else if (target) {
-            this.throttledEventsMap[key] = [
-              {
-                key,
-                originEvent: target,
-                transEvent: this._throttle(target, this.time, n, key)
-              }
-            ];
-            getTagetEvents[key] = this.throttledEventsMap[key].find(
-              (item) => item.originEvent === target
-            ).transEvent;
-          }
-        });
-      }
+          });
+        }
+      };
+
+      loopEvent(_vnode);
     });
-    return <div>{vnode}</div>;
+    return <div>{_vnode}</div>;
   }
 };
 </script>

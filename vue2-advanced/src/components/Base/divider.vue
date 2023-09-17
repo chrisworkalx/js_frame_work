@@ -2,7 +2,10 @@
   <div
     style="margin: 20px; color: #fff; font-weight: 700; background-color: #f99"
   >
-    {{ dividerTitle }}
+    <span>标题：</span>
+    <span>
+      {{ dividerTitle }}
+    </span>
   </div>
 </template>
 
@@ -17,8 +20,8 @@ export default {
   },
   computed: {
     dividerTitle() {
-      const repeatLen = this.title !== '-' ? 10 : 40;
-      return (this.title + '-').repeat(repeatLen);
+      const repeatLen = this.title !== '-' ? 1 : 40;
+      return (this.title + '：').repeat(repeatLen);
     }
   }
 };
