@@ -1989,6 +1989,11 @@
   dependencies:
     "babel-runtime" "6.x"
 
+"async-validator@4.2.5":
+  "integrity" "sha512-7HhHjtERjqlNbZtqNqy2rckN/SpOOlmDliet+lP7k+eKZEjPk3DgyeU9lIXLdeLz0uBbbVp+9Qdow9wJWgwwfg=="
+  "resolved" "https://registry.npmmirror.com/async-validator/-/async-validator-4.2.5.tgz"
+  "version" "4.2.5"
+
 "async@^2.6.4":
   "integrity" "sha512-mzo5dfJYwAn29PeiJ0zvwTo04zj8HDJj0Mn8TD7sno7q12prdbnasKJHhkm2c1LgrhlJ0teaea8860oxi51mGA=="
   "resolved" "https://registry.npmmirror.com/async/-/async-2.6.4.tgz"

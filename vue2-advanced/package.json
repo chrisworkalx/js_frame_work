@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "async-validator": "4.2.5",
     "core-js": "^3.8.3",
     "element-ui": "2.15.14",
     "lodash": "4.17.21",

@@ -11,6 +11,9 @@
       <router-link to="/throttle" exact-active-class="active-link"
         >Hoc_Throttle使用</router-link
       >
+      <router-link to="/dynamic-form" exact-active-class="active-link"
+        >Form验证</router-link
+      >
     </nav>
   </div>
 </template>

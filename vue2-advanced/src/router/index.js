@@ -20,6 +20,12 @@ const routes = [
     name: 'Throttle',
     component: () =>
       import(/* webpackChunkName: "throttle" */ '../views/Throttle/index.vue')
+  },
+  {
+    path: '/dynamic-form',
+    name: 'DynamicForm',
+    component: () =>
+      import(/* webpackChunkName: "dynamicForm" */ '../views/Form/index.vue')
   }
 ];
 
