@@ -34,7 +34,12 @@ export default {
       if (!messageBox) {
         const MessageBox = Vue.extend({
           render(h) {
-            return h('message-box', { props: rest });
+            return h('message-box', {
+              props: {
+                ...rest,
+                show: true
+              }
+            });
           }
         });
 
