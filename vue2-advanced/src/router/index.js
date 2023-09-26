@@ -32,6 +32,30 @@ const routes = [
     name: 'PopOver',
     component: () =>
       import(/* webpackChunkName: "popOver" */ '../views/PopOver/index.vue')
+  },
+  {
+    path: '/regular-export-large-file',
+    name: 'regularExportLargeFile',
+    component: () =>
+      import(
+        /* webpackChunkName: "regularExportLargeFile" */ '../views/Worker/regular-export-large.vue'
+      )
+  },
+  {
+    path: '/worker-export-large-file',
+    name: 'workerExportLargeFile',
+    component: () =>
+      import(
+        /* webpackChunkName: "workerExportLargeFile" */ '../views/Worker/worker-export-large.vue'
+      )
+  },
+  {
+    path: '/base-worker',
+    name: 'baseWorker',
+    component: () =>
+      import(
+        /* webpackChunkName: "baseWorker" */ '../views/Worker/baseWorker.vue'
+      )
   }
 ];
 

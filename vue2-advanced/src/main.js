@@ -18,6 +18,13 @@ import MessageBox from './components/MessageBox';
 import Toast from './components/Toast';
 // ==========特殊几个组件注册 over ===============/
 
+// ==========web第三方好用的封装的组件 start ===============/
+import Tui from '@wocwin/t-ui';
+// webUrl： https://wocwin.github.io/t-ui/baseComponents/
+// ==========web第三方好用的封装的组件 over ===============/
+
+Vue.use(Tui);
+
 Vue.config.productionTip = false;
 
 Vue.use(BaseComponents);

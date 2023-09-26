@@ -17,6 +17,19 @@
       <router-link to="/pop-over" exact-active-class="active-link"
         >弹框验证</router-link
       >
+      <router-link to="/base-worker" exact-active-class="active-link"
+        >worker执行</router-link
+      >
+      <router-link
+        to="/regular-export-large-file"
+        exact-active-class="active-link"
+        >常规导出大文件</router-link
+      >
+      <router-link
+        to="/worker-export-large-file"
+        exact-active-class="active-link"
+        >worker导出大文件</router-link
+      >
     </nav>
   </div>
 </template>

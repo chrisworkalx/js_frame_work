@@ -27,6 +27,7 @@ export default {
   main {
     padding: 10px;
     flex: 1;
+    overflow-x: auto;
   }
 }
 </style>
