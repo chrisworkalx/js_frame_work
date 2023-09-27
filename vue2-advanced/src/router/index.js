@@ -56,6 +56,14 @@ const routes = [
       import(
         /* webpackChunkName: "baseWorker" */ '../views/Worker/baseWorker.vue'
       )
+  },
+  {
+    path: '/transition',
+    name: 'TransitionUse',
+    component: () =>
+      import(
+        /* webpackChunkName: "TransitionUse" */ '../views/Transition/index.vue'
+      )
   }
 ];
 

@@ -30,6 +30,9 @@
         exact-active-class="active-link"
         >worker导出大文件</router-link
       >
+      <router-link to="/transition" exact-active-class="active-link"
+        >动画</router-link
+      >
     </nav>
   </div>
 </template>
