@@ -41,6 +41,9 @@ import myCollapseTransition from '@/components/MyTransition';
 
 import CstCollapseTransition from '@/components/MyCollapseTransition';
 
+//测试npm包
+import VueEasyUsedComponents from 'vue-easy-used-components';
+
 Vue.use(Tui);
 
 Vue.config.productionTip = false;
@@ -58,6 +61,8 @@ Vue.use(ElementUI);
 Vue.use(myCollapseTransition);
 
 Vue.use(CstCollapseTransition);
+
+Vue.use(VueEasyUsedComponents);
 
 new Vue({
   router,

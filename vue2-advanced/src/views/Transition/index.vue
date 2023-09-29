@@ -20,6 +20,8 @@
         <h1>D</h1>
       </div>
     </my-collapse-transition> -->
+
+    <TestTransition />
   </div>
 </template>
 
@@ -29,13 +31,15 @@ import TransitionBase from './transition/base';
 import TransitionCollapse from './transition/transition-collapse';
 import CstCollapseTransition from './transition/MyExtendCollapse.vue';
 // import MyCollapseTransition from './transition/ExtendTransition.vue';
+import TestTransition from './transition/TestTransition.vue';
 export default {
   name: 'Transition-use',
   components: {
     Base,
     TransitionBase,
     TransitionCollapse,
-    CstCollapseTransition
+    CstCollapseTransition,
+    TestTransition
   },
   watch: {
     open(n) {
