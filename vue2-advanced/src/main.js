@@ -43,6 +43,7 @@ import CstCollapseTransition from '@/components/MyCollapseTransition';
 
 //测试npm包
 import VueEasyUsedComponents from 'vue-easy-used-components';
+import 'vue-easy-used-components/lib/vue-easy-used-components.css';
 
 Vue.use(Tui);
 

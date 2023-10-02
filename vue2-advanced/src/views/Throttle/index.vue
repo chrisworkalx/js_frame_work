@@ -29,6 +29,10 @@ export default {
   render() {
     return (
       <div>
+        <divider title="测试easy-used-throttle"></divider>
+        <easy-used-throttle events="blur" time={3000}>
+          <el-input onBlur={() => console.log('测试失去焦点')}></el-input>
+        </easy-used-throttle>
         <divider title="原生debounce实现"></divider>
         <el-button type="info" onClick={this.handleDebounce}>
           常规防抖

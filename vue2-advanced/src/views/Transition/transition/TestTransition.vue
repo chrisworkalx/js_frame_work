@@ -5,7 +5,8 @@
       @beforeEnter="handleBeforeEnter"
       @afterEnter="handleAfterEnter"
       @beforeLeave="handleBeforeLeave"
-      v-if="false"
+      direction="horizon"
+      :duration="3000"
     >
       <!-- direction="horizon"
       :duration="5000"
@@ -28,8 +29,8 @@
       @beforeEnter="handleBeforeEnter"
       @afterEnter="handleAfterEnter"
       @beforeLeave="handleBeforeLeave"
-      direction="horizon"
-      :duration="5000"
+      direction="vertical"
+      :duration="2000"
     >
       <!-- direction="horizon"
       :duration="5000"
@@ -53,7 +54,7 @@ export default {
   },
   methods: {
     handleAfterEnter(el) {
-      // console.log('after-enter', el);
+      console.log('after-enter', el);
       this.paddingLeft = '10px';
     },
 
