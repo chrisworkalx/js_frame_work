@@ -58,6 +58,7 @@
           })
           .finally(() => {
             controller.resolveWhenResume = true;
+            controller.resolve();
           });
 
         const result = _Promise

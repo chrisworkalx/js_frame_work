@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="" rel="stylesheet" />
+    <title>原生xhr请求个数限制</title>
+  </head>
+  <body>
+    <button onclick="randomLoadLength()">并发请求个数</button>
+    <button onclick="getUrlByHttp()">原生请求</button>
+    <button onclick="getUrlByFetch()">fetch请求</button>
+  </body>
+  <script>
+    let maxLoad = 4;
+    const baseUrl = 'https://jsonplaceholder.typicode.com/posts/';
+    const apiLists = Array(15)
+      .fill('')
+      .map((_, $index) => baseUrl + ($index + 1));
+
+    function randomLoadLength() {
+      maxLoad = Math.floor(Math.random() * apiLists.length);
+      console.log('maxLoad', maxLoad);
+    }
+
+    function getUrlByHttp() {
+      let idx = maxLoad;
+      function getContention(index) {
+        console.log('正在执行。。。。', index);
+        const xhrRequest = new XMLHttpRequest();
+
+        xhrRequest.open('get', apiLists[index]);
+
+        xhrRequest.onload = function () {
+          console.log('当前执行完：', index);
+          idx++;
+          if (idx < apiLists.length) {
+            getContention(idx);
+          }
+        };
+
+        xhrRequest.send();
+      }
+
+      function start() {
+        for (let i = 0; i < maxLoad; i++) {
+          getContention(i);
+        }
+      }
+      start();
+    }
+
+    function getUrlByFetch() {
+      let idx = maxLoad;
+      function getContention(index) {
+        console.log('正在执行。。。。', index);
+        fetch(apiLists[index])
+          .then((res) => res.json())
+          .then(() => {
+            console.log('执行完了：', index);
+            idx++;
+            if (idx < apiLists.length) {
+              getContention(idx);
+            }
+          });
+      }
+
+      function start() {
+        for (let i = 0; i < maxLoad; i++) {
+          getContention(i);
+        }
+      }
+      start();
+    }
+  </script>
+</html>
