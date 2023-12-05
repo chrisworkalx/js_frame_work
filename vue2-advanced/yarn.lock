@@ -11954,10 +11954,10 @@ vue-draggable-resizable@^2.3.0:
   resolved "https://registry.npmmirror.com/vue-draggable-resizable/-/vue-draggable-resizable-2.3.0.tgz"
   integrity sha512-77CLRj1TPwB30pwsjOf3pkd1UzYanCdKXbqhILJ0Oo5QQl50lvBfyQCXxMFzwWwTc3sbBbQH3FfWSV+BkoSElA==
 
-vue-easy-used-components@0.1.8:
-  version "0.1.8"
-  resolved "https://registry.npmjs.org/vue-easy-used-components/-/vue-easy-used-components-0.1.8.tgz#66265c0ebb93e181fc34e6ebd6982c25fbc7b627"
-  integrity sha512-072SKdOFTl2RhV/GvU8JG/y1FFLvgmgf273IS74U6zzL3SbW+nOuf4SlktZHtx1hi/lIhlBidspR3msL9Dv90Q==
+vue-easy-used-components@0.1.12:
+  version "0.1.12"
+  resolved "https://registry.npmjs.org/vue-easy-used-components/-/vue-easy-used-components-0.1.12.tgz#0c8283050bc0ab88cc1176d947214d6e38c65217"
+  integrity sha512-wDpN17AP+8IBJ0EcaYz1Sz1LyvHU+RSJPcWgqT+HPHo4FznN+HRomptxFuPRtPH9K3AONKuGN6kf9C7kbQarKg==
   dependencies:
     core-js "^3.8.3"
     vue "^2.6.14"

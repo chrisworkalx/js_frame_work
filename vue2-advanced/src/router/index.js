@@ -23,6 +23,9 @@ const routes = [
   },
   {
     path: '/dynamic-form',
+    meta: {
+      showWaterMark: true
+    },
     name: 'DynamicForm',
     component: () =>
       import(/* webpackChunkName: "dynamicForm" */ '../views/Form/index.vue')

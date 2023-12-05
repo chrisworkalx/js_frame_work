@@ -2,7 +2,9 @@
   <div id="app">
     <my-menu></my-menu>
     <main>
-      <router-view />
+      <easy-used-water-mark :is-show-water-mark="isShowWaterMark">
+        <router-view />
+      </easy-used-water-mark>
     </main>
   </div>
 </template>
@@ -12,6 +14,15 @@ export default {
   name: 'app',
   components: {
     myMenu: menu
+  },
+  computed: {
+    isShowWaterMark() {
+      console.log(
+        'this.$route.meta.showWaterMark',
+        this.$route.meta.showWaterMark
+      );
+      return this.$route.meta.showWaterMark || false;
+    }
   }
 };
 </script>

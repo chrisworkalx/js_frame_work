@@ -9,6 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ag-grid-community": "30.2.0",
+    "ag-grid-enterprise": "30.2.0",
+    "ag-grid-vue3": "30.2.0",
+    "ant-design-vue": "3",
+    "lodash-es": "4.17.21",
     "vue": "^3.2.41"
   },
   "devDependencies": {
