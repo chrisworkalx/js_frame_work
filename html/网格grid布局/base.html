@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="" rel="stylesheet" />
+    <title>基本用法</title>
+    <style>
+      :root {
+        --base-item-width: 200px;
+        --base-item-height: 200px;
+        --base-item-line-height: 200px;
+      }
+      .flex-container {
+        display: grid;
+        place-items: center; /* 这个属性是 align-items 和 justify-items 的简写，可以实现水平和垂直居中 */
+      }
+      .flex-item {
+        width: var(--base-item-width);
+        height: var(--base-item-height);
+      }
+
+      .bg-green {
+        background-color: green;
+      }
+      .font-20 {
+        font-size: 20px;
+      }
+      .bold-700 {
+        font-weight: 700;
+      }
+
+      .text-color-white {
+        color: #fff;
+      }
+      .text-center {
+        text-align: center;
+        line-height: var(--base-item-line-height);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex-container">
+      <div
+        class="flex-item bg-green font-20 bold-700 text-center text-color-white"
+      >
+        A
+      </div>
+    </div>
+  </body>
+</html>

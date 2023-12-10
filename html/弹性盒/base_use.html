@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="" rel="stylesheet" />
+    <title>基本用法</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --base-item-width: 200px;
+        --base-item-height: 200px;
+        --base-item-line-height: 200px;
+      }
+      .flex-container {
+        display: flex;
+        height: 100vh;
+        border: solid 1px red;
+        box-sizing: border-box;
+      }
+      .flex-direction-column {
+        flex-direction: column;
+      }
+      .flex-start {
+        justify-content: flex-start;
+      }
+
+      .flex-end {
+        justify-content: flex-end;
+      }
+
+      .flex-wrap {
+        flex-wrap: wrap;
+      }
+
+      .align-content-between {
+        align-content: space-between;
+      }
+
+      .flex-item {
+        width: var(--base-item-width);
+        height: var(--base-item-height);
+        /* height: auto; */
+        flex-shrink: 3;
+      }
+
+      .flex-between {
+        justify-content: space-between;
+      }
+
+      .flex-around {
+        justify-content: space-around;
+      }
+
+      .flex-evenly {
+        justify-content: space-evenly;
+      }
+
+      .flex-stretch {
+        justify-content: stretch;
+      }
+
+      .align-start {
+        align-items: flex-start;
+      }
+
+      .align-end {
+        align-items: flex-end;
+      }
+
+      .align-stretch {
+        align-items: stretch;
+      }
+
+      .bg-green {
+        background-color: green;
+      }
+      .bg-orange {
+        background-color: orange;
+      }
+      .font-20 {
+        font-size: 20px;
+      }
+      .bold-700 {
+        font-weight: 700;
+      }
+
+      .text-color-white {
+        color: #fff;
+      }
+      .text-center {
+        text-align: center;
+        line-height: var(--base-item-line-height);
+      }
+      .flex-order-2 {
+        order: 2;
+      }
+
+      .align-self-start {
+        align-self: flex-start;
+      }
+
+      /* .flex-item:nth-child(2) {
+        flex-grow: 1;
+      } */
+      .flex-item:nth-child(2) {
+        /* flex-shrink: 2; */
+        flex-basis: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex-container">
+      <!-- <div
+        class="flex-item bg-green font-20 bold-700 text-center text-color-white flex-order-2 align-self-start"
+      >
+        A
+      </div>
+      <div
+        class="flex-item bg-orange font-20 bold-700 text-center text-color-white"
+      >
+        B
+      </div> -->
+    </div>
+  </body>
+
+  <script>
+    const len = 3;
+    const flexContainer = document.querySelector('.flex-container');
+
+    const randomNum = () => Math.ceil(Math.random() * 255);
+
+    const randomColor = () => {
+      return `rgb(${randomNum()}, ${randomNum()}, ${randomNum()})`;
+    };
+    const itemLength = Array(len)
+      .fill('')
+      .map((_, index) => index);
+
+    const htmlString = itemLength.reduce((target, next) => {
+      return (target += ` <div
+        class="flex-item font-20 bold-700 text-center text-color-white"
+        style="background-color: ${randomColor()};"
+      >
+        ${next}
+      </div>`);
+    }, '');
+
+    flexContainer.innerHTML = htmlString;
+  </script>
+</html>
