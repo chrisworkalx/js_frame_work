@@ -1,0 +1,16 @@
+{
+  "name": "sticky",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "sass style.scss style.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "1.69.5",
+    "scss": "0.2.4"
+  }
+}

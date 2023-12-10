@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="" rel="stylesheet" />
+    <title>flex两栏布局</title>
+    <style>
+      .flex {
+        display: flex;
+        width: 100%;
+        /* align-content 可以给子元素等边距 布局 */
+        align-content: space-around;
+        /* justify-content: 单行布局*/
+        /* justify-content: space-between;  */
+        flex-wrap: wrap;
+        /* gap: 10px; */
+      }
+      .item {
+        width: 160px;
+        height: 80px;
+        font-size: 20px;
+        text-align: center;
+        line-height: 80px;
+        transition: all 0.3s ease-in-out;
+        /* padding: 0 30px; */
+        cursor: pointer;
+        /* flex: 1 1 auto; */
+        /* flex-basis: 160px; */
+        /* align-self: flex-start; */
+      }
+
+      /* align-self: flex-start;  */
+      /*针对align-items设置的纵向交叉轴改变*/
+      /* .item:nth-last-child(1) {
+        color: #fff;
+        font-size: 30px;
+        font-weight: 700;
+        justify-self: left;
+        align-self: flex-start; 
+      } */
+
+      /* .flex > *:nth-child(1) {
+        align-self: flex-start;
+      } */
+      .item:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 10px #ccc;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex"></div>
+  </body>
+
+  <script>
+    const itemsLength = 62;
+    const flexContainer = document.querySelector('.flex');
+
+    const randomNum = () => Math.ceil(Math.random() * 255);
+
+    const randomColor = () => {
+      return `rgb(${randomNum()}, ${randomNum()}, ${randomNum()})`;
+    };
+    let str = '';
+    for (let i = 0; i < itemsLength; i++) {
+      str += `<div class="item" style="background-color: ${randomColor()};">${
+        i + 1
+      }</div>`;
+    }
+
+    flexContainer.innerHTML = str;
+  </script>
+</html>
