@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="" rel="stylesheet" />
+    <title>批量请求处理</title>
+  </head>
+  <body>
+    <h1>关于批量请求处理方案</h1>
+    <div>
+      <button id="promiseButton">promise模式</button>
+      <br />
+      <button id="dutyButton">职责链模式</button>
+    </div>
+  </body>
+  <!-- <script src="./js/app.js"></script> -->
+  <script type="module">
+    import { Pool } from './js/app.js';
+
+    let sleepFn = (e, rejectBoolean = false) => {
+      return new Promise((resolve, reject) => {
+        console.log('开始执行sleepFn方法:', e);
+        setTimeout(
+          (e) => {
+            if (rejectBoolean) {
+              reject(e);
+            }
+            resolve(e);
+          },
+          e,
+          e
+        );
+      });
+    };
+
+    let randomPromise = (t = 500, text = '') =>
+      new Promise((res, rej) => {
+        console.log('执行--randomPromise方法=' + text);
+        setTimeout(() => {
+          const isPass = Math.random() > 0.4;
+          if (isPass) {
+            res('ok' + text);
+          } else {
+            rej('fail' + text);
+          }
+        }, t);
+      });
+
+    let res;
+    let temp = {
+      eventBus: {
+        finish: [
+          (e) => {
+            console.log('触发finish方法:', e);
+          },
+          () => {
+            console.log('触发finish方法2');
+          }
+        ]
+      },
+      // 最大重试次数
+      MaxRetryCount: 3,
+      // 最大并发数
+      MaxConcurrentCount: 3,
+      // 异步数组
+      PromiseArr: [
+        async () => {
+          return sleepFn(0);
+        },
+        () => {
+          return sleepFn(0);
+        },
+        () => randomPromise(2000, 'key1'),
+        () => randomPromise(1000, 'key2'),
+        () => {
+          return sleepFn(0);
+        }
+      ],
+      ConcurrentFn: ({ Pool }) => {
+        console.log('触发了并发' + Pool);
+      },
+      RetryFn: (data) => {
+        console.log('触发了重试', data);
+      }
+      // 参数列表数组
+    };
+
+    promiseButton.onclick = () => {
+      res = new Pool(temp);
+    };
+
+    // const promiseArr = [
+    //   randomPromise(3000, '1111'),
+    //   randomPromise(2000, '2222')
+    // ];
+
+    // try {
+    //   const result = await Promise.race(promiseArr);
+    //   console.log('result', result);
+    // } catch (e) {
+    //   console.log('e', e);
+    // }
+  </script>
+</html>

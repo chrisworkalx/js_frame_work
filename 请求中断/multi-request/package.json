@@ -1,0 +1,16 @@
+{
+  "name": "multi-request",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc --watch",
+    "build": "browserify ./js/app.js -o bundle.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "17.0.0"
+  }
+}
