@@ -6,6 +6,9 @@
     <title>支持某个请求可打断</title>
   </head>
   <body>
+    <button id="pause">pause</button>
+    <br />
+    <button id="resume">resume</button>
     <script>
       const _Promise = Promise;
       function _request() {
@@ -45,21 +48,18 @@
       function requestWithPauseControl(request) {
         const controller = createPauseControllerPromise();
 
-        const controlRequest = request()
-          .then((data) => {
-            //必须等待三秒才会执行这里
-            if (!controller.isPause) {
-              //这里相当于架设一层controller控制器
-              //第一次因为controller.isPause是false状态因此会执行另外一个promise（即controller.promise让变为fullfilled状态 方便后续promise.all通过）
-              console.log('第一次，当controller.isPause为false时候触发');
-              controller.resolve();
-            }
-            return data;
-          })
-          .finally(() => {
-            controller.resolveWhenResume = true;
+        const controlRequest = request().then((data) => {
+          //必须等待三秒才会执行这里 这里只是针对结果进行了暂缓展示 不是彻底
+          if (!controller.isPause) {
+            //这里相当于架设一层controller控制器
+            //第一次因为controller.isPause是false状态因此会执行另外一个promise（即controller.promise让变为fullfilled状态 方便后续promise.all通过）
+            console.log('第一次，当controller.isPause为false时候触发');
             controller.resolve();
-          });
+          }
+          controller.resolveWhenResume = controller.isPause;
+          console.log('执行第一个promise--request');
+          return data;
+        });
 
         const result = _Promise
           .all([controlRequest, controller.promise])
@@ -67,9 +67,12 @@
             //Promise.all 必须等待所有的任务都完成才会执行
             //因此 controlRequest已经完成了
             //而 controller.promise这个promise函数还在pending状态
-            controller.resolve(); //避免因setTimeout导致promise一直被引用无法释放而造成的内存泄露
             return data[0];
           });
+        result.finally(() => {
+          console.log('finally----');
+          controller.resolve();
+        });
 
         _Promise.prototype.pause = controller.pause.bind(controller);
         _Promise.prototype.resume = controller.resume.bind(controller);
@@ -77,19 +80,40 @@
         return result;
       }
 
+      addEventListners();
+
       // result是一个promise实例
       const result = requestWithPauseControl(_request).then((data) => {
         console.log(data, '====here');
       });
 
-      console.log('result', result);
+      function addEventListners() {
+        pause.addEventListener(
+          'click',
+          () => {
+            console.log('暂停运行');
+            result.pause(); //暂停等待
+          },
+          false
+        );
 
-      result.pause(); //暂停等待
+        resume.addEventListener(
+          'click',
+          () => {
+            console.log('恢复');
+            result.resume();
+          },
+          false
+        );
+      }
 
-      setTimeout(() => {
-        console.log('开启恢复');
-        result.resume();
-      }, 5000);
+      //模拟暂停 恢复
+      // result.pause(); //暂停等待
+
+      // setTimeout(() => {
+      //   console.log('开启恢复');
+      //   result.resume();
+      // }, 5000);
     </script>
   </body>
 </html>

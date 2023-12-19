@@ -25,6 +25,7 @@ class Pool {
       this.config.MaxRetryCount
     );
     this.paused = false;
+    // this.paused = true;
   }
   /**
    * @des 实现任务队列的暂停恢复
@@ -59,6 +60,7 @@ class Pool {
     for (let i = 0; i < PromiseArr.length; i++) {
       // 实现暂停效果
       await this.pauseIfNeeded();
+      console.log('i', i);
       let task = PromiseArr[i];
       task()
         .then((data) => {
@@ -86,6 +88,7 @@ class Pool {
         });
       pool.push(task);
       if (pool.length === Concurrent) {
+        console.log('pool------length');
         // 用Promise.race 实现并发
         try {
           that.config.ConcurrentFn({ Pool: pool });
