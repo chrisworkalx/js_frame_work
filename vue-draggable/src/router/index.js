@@ -174,6 +174,12 @@ const routes = [
       import(/* webpackChunkName: "watch" */ '../views/watch.vue')
   },
   {
+    path: '/cascader',
+    name: 'ElCascader',
+    component: () =>
+      import(/* webpackChunkName: "cascader" */ '../views/ElCascader.vue')
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/404.vue')

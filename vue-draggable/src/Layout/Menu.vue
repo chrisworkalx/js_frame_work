@@ -15,6 +15,7 @@
     <router-link to="/testVueProperty">testVueProperty</router-link>
     <router-link to="/iframe">测试iframe</router-link>
     <router-link to="/watch">测试watch</router-link>
+    <router-link to="/cascader">el-cascader</router-link>
   </nav>
 </template>
 
