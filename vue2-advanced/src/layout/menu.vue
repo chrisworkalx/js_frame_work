@@ -33,6 +33,12 @@
       <router-link to="/transition" exact-active-class="active-link"
         >动画</router-link
       >
+      <router-link to="/about-route" exact-active-class="active-link"
+        >路由相关</router-link
+      >
+      <router-link to="/cropper-image" exact-active-class="active-link"
+        >CropperImage</router-link
+      >
     </nav>
   </div>
 </template>

@@ -67,6 +67,20 @@ const routes = [
       import(
         /* webpackChunkName: "TransitionUse" */ '../views/Transition/index.vue'
       )
+  },
+  {
+    path: '/about-route',
+    name: 'RouteDemo',
+    component: () =>
+      import(/* webpackChunkName: "RouteDemo" */ '../views/Route/index.vue')
+  },
+  {
+    path: '/cropper-image',
+    name: 'CropperImage',
+    component: () =>
+      import(
+        /* webpackChunkName: "RouteDemo" */ '../views/CropperImage/index.vue'
+      )
   }
 ];
 
