@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="" rel="stylesheet" />
+    <title>canvas</title>
+    <style>
+      #canvas {
+        width: 800px;
+        height: 800px;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="width: 100px; height: 100px; background-color: green"></div>
+    <canvas
+      id="canvas_1"
+      width="1000"
+      height="500"
+      style="box-shadow: 0px 0px 20px black"
+    >
+      当前浏览器不支持 canvas
+    </canvas>
+    <!--如果当前浏览器不支持canvas则会输出提示信息： 当前浏览器不支持canvas-->
+  </body>
+  <script>
+    // //1.获取 canvas 元素对应的 DOM 对象
+    // var c = document.getElementById('canvas_1');
+
+    // //2.获取在 canvas 上绘图的 canvasRenderingContent2D 对象。这两行是必不可少的哦
+    // var ctx = c.getContext('2d');
+
+    // //3.绘制
+    // ctx.beginPath(); //开始绘制
+    // ctx.arc(95, 50, 40, 0, 2 * Math.PI); //arc 的意思是“弧”
+    // ctx.strokeStyle = 'blue'; //将线条颜色设置为蓝色
+    // ctx.stroke(); //stroke() 方法默认颜色是黑色（如果没有上面一行，则会是黑色）。
+
+    drawCircle();
+
+    function drawCircle() {
+      const canvas = document.getElementById('canvas_1');
+      const ctx = canvas.getContext('2d');
+
+      ctx.beginPath();
+      // ctx.arc(337, 301, 100, 0, Math.PI * 2); // 在(337, 301)位置绘制一个半径为43的圆
+      ctx.arc(100, 100, 50, 0, Math.PI * 2);
+      // 设置填充颜色
+      ctx.fillStyle = 'blue';
+      ctx.fill();
+
+      // 设置描边颜色
+      ctx.strokeStyle = 'green';
+      ctx.stroke(); // 描边
+    }
+  </script>
+</html>

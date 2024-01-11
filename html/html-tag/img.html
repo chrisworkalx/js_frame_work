@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="" rel="stylesheet" />
+    <title>img特性使用</title>
+    <style>
+      .box {
+        position: relative;
+        /* background-color: red; */
+        /* padding: 10px; */
+      }
+      .position1 {
+        position: absolute;
+        width: 236px;
+        height: 306px;
+        left: 34px;
+        top: 44px;
+        background-color: green;
+        pointer-events: none;
+      }
+      .position2 {
+        width: 86px;
+        height: 86px;
+        border-radius: 50%;
+        background-color: #f40;
+        left: 294px;
+        top: 258px;
+        position: absolute;
+        pointer-events: none;
+      }
+      #canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 200;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <img
+        src="https://static.wetab.link/widget-background/background13_larg.jpg?imageView2/2/w/1064/format/webp"
+        usemap="#myMap"
+        alt="Image Map"
+        class="img-tag"
+      />
+
+      <div class="position1"></div>
+      <!-- <div class="position2"></div> -->
+      <canvas id="canvas"></canvas>
+    </div>
+    <map name="myMap">
+      <area
+        shape="rect"
+        coords="34,44,270,350"
+        alt="Rectangle"
+        href="https://www.baidu.com"
+        target="_blank"
+      />
+      <area
+        shape="circle"
+        coords="337,301,43"
+        alt="Circle"
+        href="https://www.sina.com.cn"
+        target="_blank"
+      />
+      <area
+        shape="poly"
+        coords="337,121,341,144,345,189,340,209,331,221"
+        alt="Polygon"
+        href="https://www.taobao.com"
+        target="_blank"
+      />
+    </map>
+  </body>
+
+  <script>
+    window.onload = function () {
+      const oCanvas = document.querySelector('#canvas');
+      const img = document.createElement('img');
+      img.src =
+        'https://static.wetab.link/widget-background/background13_larg.jpg?imageView2/2/w/1064/format/webp';
+
+      console.log(1111);
+      img.onload = function () {
+        console.dir(this);
+        // oCanvas.style.width = '1000px';
+        // oCanvas.style.height = this.height + 'px';
+
+        oCanvas.setAttribute('width', 1000);
+        oCanvas.setAttribute('height', this.height);
+
+        drawCircle();
+      };
+
+      function drawCircle() {
+        // const canvas = document.getElementById('canvas');
+        const ctx = oCanvas.getContext('2d');
+
+        ctx.beginPath();
+        ctx.arc(337, 301, 43, 0, Math.PI * 2); // 在(250, 250)位置绘制一个半径为100的圆
+        // 设置填充颜色
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+
+        // 设置描边颜色
+        ctx.strokeStyle = 'green';
+        ctx.closePath(); // 闭合路径
+        ctx.stroke(); // 描边
+
+        //绘制第二个连线
+        ctx.beginPath();
+        ctx.strokeStyle = 'orange';
+        ctx.lineWidth = 2;
+        ctx.moveTo(337, 121); // 起点坐标
+        ctx.lineTo(341, 144); // 终点坐标
+        ctx.lineTo(345, 189); // 终点坐标
+        ctx.lineTo(340, 209); // 终点坐标
+        ctx.lineTo(331, 221); // 终点坐标
+        ctx.closePath(); // 闭合路径
+        ctx.stroke(); // 描边
+      }
+    };
+  </script>
+</html>
