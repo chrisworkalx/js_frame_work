@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn1">点击防抖</button>
+    <div
+      id="scrollDiv"
+      style="
+        height: 200px;
+        background-color: #f40;
+        overflow: auto;
+        padding: 10px;
+      "
+    >
+      <div style="height: 3000px; background-color: #f99"></div>
+    </div>
+    <script src="./index.js"></script>
+    <script>
+      function testClick() {
+        console.log(111);
+      }
+
+      btn1.onclick = debounce(testClick, 1000);
+
+      function scrollEvent() {
+        console.log('scroll');
+      }
+
+      scrollDiv.onscroll = throttle(scrollEvent, 1000);
+    </script>
+  </body>
+</html>

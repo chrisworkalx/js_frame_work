@@ -18,6 +18,15 @@
       return randomNum ? a - b : b - a;
     });
 
+    //e.g.2
+    for (let i = 0; i < arr.length; i++) {
+      const randomIndex = Math.floor(Math.random() * arr.length);
+
+      const temp = arr[i];
+      arr[i] = arr[randomIndex];
+      arr[randomIndex] = temp;
+    }
+
     // 1234567 -> 1,234,567
 
     function splitNum(n) {

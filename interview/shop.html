@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ccc;
+        width: 100vw;
+        height: 100vh;
+        flex-direction: column;
+      }
+      .box .wrapper {
+        width: 750px;
+        padding: 10px 16px;
+        border-radius: 10px;
+        /* height: 350px; */
+        background-color: #fff;
+        display: flex;
+        min-height: 60px;
+        gap: 10px;
+        align-items: flex-start;
+        margin: 20px;
+      }
+
+      .box .wrapper .title {
+        width: 20px;
+        height: 20px;
+        font-size: 16px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 20px;
+        background-color: blanchedalmond;
+        color: gray;
+      }
+
+      .box .wrapper .main {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .box .wrapper .main .content {
+      }
+
+      .sub-title {
+        color: #666;
+      }
+
+      .main-content {
+        color: #000;
+        font-size: 24px;
+        font-weight: 700;
+      }
+
+      .box .wrapper .main .sale {
+        width: 80px;
+        height: 40px;
+        background-color: #f80;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="wrapper">
+        <!-- left -->
+        <div class="title">1</div>
+        <!-- right -->
+        <div class="main">
+          <!-- content -->
+          <div class="content">
+            <div class="sub-title">标题标题标题标题标题标题</div>
+            <div class="main-content">这是商品的主要信息</div>
+          </div>
+          <!-- sale -->
+          <div class="sale"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const list = [
+      {
+        id: 1,
+        info: {
+          subTitle: '标题标题标题标题标题标题1',
+          mainContent: '这是商品的主要信息1',
+          saleInfo: '6e8376'
+        }
+      },
+      {
+        id: 2,
+        info: {
+          subTitle: '标题标题标题标题标题标题2',
+          mainContent: '这是商品的主要信息2',
+          saleInfo: '122233'
+        }
+      },
+      {
+        id: 3,
+        info: {
+          subTitle: '标题标题标题标题标题标题3',
+          mainContent: '这是商品的主要信息',
+          saleInfo: '88888'
+        }
+      }
+    ];
+
+    const htmlSTr = list.reduce((prev, next) => {
+      return (
+        prev +
+        `
+      <div class="wrapper">
+
+        <div class="title">${next.id}</div>
+        <div class="main">
+          <div class="content">
+            <div class="sub-title">${next.info.subTitle}</div>
+            <div class="main-content">${next.info.mainContent}</div>
+          </div>
+          <div class="sale">${next.info.saleInfo}</div>
+          </div>
+        
+
+        </div>
+      `
+      );
+    }, '');
+
+    console.log('htmlSTr', htmlSTr);
+
+    const obox = document.querySelector('.box');
+    obox.innerHTML = htmlSTr;
+  </script>
+</html>
