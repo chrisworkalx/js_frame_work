@@ -16,6 +16,7 @@
     <div class="box blue" ref="blue"></div>
     <div class="box orange" ref="orange"></div>
     <Draggable />
+    <el-button type="primary" @click="fetchUrlTwo">请求111</el-button>
   </div>
 </template>
 
@@ -24,6 +25,8 @@
 import guide from '@/mixin/guide';
 import Draggable from '../components/Draggable.vue';
 
+import $http from '@/http';
+
 export default {
   name: 'HomeView',
   mixins: [guide],
@@ -31,9 +34,24 @@ export default {
     Draggable
   },
   mounted() {
+    //测试baseUrl动态配置
+    this.testFetchBaseUrl();
+
     this.handleCollectGuides();
   },
   methods: {
+    testFetchBaseUrl(path = '/aaa') {
+      $http
+        .get(path)
+        .then((r) => void console.log(r, '-----response'))
+        .catch((e) => {
+          console.log('error', e);
+        });
+    },
+
+    fetchUrlTwo() {
+      this.testFetchBaseUrl('/bbb');
+    },
     handleCollectGuides() {
       const arr = [
         {

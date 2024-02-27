@@ -47,9 +47,9 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    // component: HomeView
+    component: HomeView
     // component: ElSelect
-    component: ElSelectDirective
+    // component: ElSelectDirective
   },
   {
     path: '/about',

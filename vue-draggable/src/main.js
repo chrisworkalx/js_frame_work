@@ -22,6 +22,7 @@ import store from './store';
 import lazyScroll from './directives/lazy-scroll-load';
 import { MessageBox as ToolMessageBox } from './components/MyUI';
 
+store.dispatch('getBaseUrl');
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueMsgXiaoXiaoBoJue);
