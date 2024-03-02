@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="" rel="stylesheet" />
+    <title></title>
+  </head>
+  <body>
+    <h1></h1>
+  </body>
+
+  <script>
+    function setRem() {
+      //  PC端
+      // 基准大小
+      let baseSize = 100;
+      let basePc = baseSize / 1920; // 表示1920的设计图,使用100PX的默认值
+      let vW = window.innerWidth; // 当前窗口的宽度
+      let vH = window.innerHeight; // 当前窗口的高度
+      // 非正常屏幕下的尺寸换算
+      let dueH = (vW * 1080) / 1920;
+      if (vH < dueH) {
+        vW = (vH * 1920) / 1080;
+      }
+      let rem = vW * basePc;
+      document.documentElement.style.fontSize =
+        (rem / 1.72 < 40 ? 45 : rem / 1.72) + 'px';
+    }
+    // 初始化
+    setRem();
+    // 改变窗口大小时重新设置 rem
+    window.onresize = function () {
+      setRem();
+    };
+  </script>
+
+  <script>
+    (function (doc, win) {
+      var docEl = doc.documentElement,
+        resizeEvt =
+          'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          if (clientWidth >= 640) {
+            docEl.style.fontSize = '100px';
+          } else {
+            docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+          }
+        };
+
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+  </script>
+
+  <script>
+    // window.addEventListener('pageShow') 是 JavaScript 代码，用于在浏览器加载或显示页面时添加事件监听器。pageShow 事件在文档被加载后触发，包括那些由于历史记录（如后退/前进按钮）而重新加载的页面。
+
+    // 这个事件对于检测页面是否从缓存中加载（即，不重新从服务器请求）特别有用。当页面从缓存中加载时，performance.navigation.type 的值将为 2（即 PERFORMANCE_NAVIGATION_TYPE_RELOAD）。
+
+    // 以下是一个简单的示例，演示如何使用 pageShow 事件来检测页面是否从缓存中加载：
+
+    // javascript
+    window.addEventListener('pageShow', function (event) {
+      if (performance.navigation.type === 2) {
+        console.log('页面是从缓存中加载的');
+      } else {
+        console.log('页面是从服务器加载的');
+      }
+    });
+    // 需要注意的是，performance.navigation 和 pageShow 事件可能不在所有浏览器中都可用，或者可能需要特定的浏览器设置才能启用。因此，在使用这些功能时，最好检查它们的可用性，并考虑使用回退机制以确保代码在所有浏览器中都能正常工作。
+  </script>
+
+  <script type="text/javascript">
+    (function (w, d) {
+      function setSize() {
+        var screenWidth = d.documentElement.clientWidth;
+        var currentFontSize = (screenWidth * 100) / 750;
+        d.documentElement.style.fontSize = currentFontSize + 'px';
+      }
+      w.addEventListener('resize', setSize);
+      w.addEventListener('pageShow', setSize);
+      w.addEventListener('DOMContentLoaded', setSize);
+    })(window, document);
+  </script>
+
+  <script>
+    function setHtmlSize() {
+      var pageWidth = window.innerWidth;
+      if (typeof pageWidth != 'number') {
+        if (document.compatMode == 'number') {
+          pageWidth = document.documentElement.clientWidth;
+        } else {
+          pageWidth = document.body.clientWidth;
+        }
+      }
+      var fontSize = (window.innerWidth * 100) / 750;
+      if (fontSize < 40) {
+        fontSize = 40;
+      }
+      //根据屏幕大小确定根节点字号
+      document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px';
+    }
+    function resize() {
+      setHtmlSize();
+    }
+    if (window.attachEvent) {
+      window.attachEvent('resize', resize);
+    } else if (window.addEventListener) {
+      window.addEventListener('resize', resize, false);
+    }
+    setHtmlSize();
+  </script>
+</html>

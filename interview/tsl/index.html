@@ -1,0 +1,186 @@
+<script>
+  // you can write to stdout for debugging purposes, e.g.
+  // console.log('this is a debug message');
+
+  function solution(s) {
+    debugger;
+    // Implement your solution here
+
+    /*
+    最终数组至少两个数字保存，否则报错
+
+     + 表示 最后两个数字需要相加 合并成一个数字返回
+     - 表示 最后一个数字减去倒数第二数字 返回
+     DUP 表示拷贝前一个数字
+
+     POP表示删除前一个数字
+
+
+
+    */
+
+    if (!s || !s.split(' ').length) {
+      throw new Error('params must not be empty!');
+    }
+
+    let result = '';
+    let finalArr = [];
+    let isPass = true;
+
+    const splitStr = s.split(/\s+/);
+
+    for (let i = 0; i < splitStr.length; i++) {
+      let splitValue = splitStr[i];
+
+      if (i === 0 && isNaN(splitValue)) {
+        result = -1;
+        isPass = false;
+        break;
+      }
+
+      if (!isNaN(splitValue)) {
+        finalArr.push(splitValue);
+        continue;
+      }
+
+      if ((splitValue === '+' || splitValue === '-') && finalArr.length < 2) {
+        result = -1;
+        isPass = false;
+        break;
+      }
+
+      if (splitValue === '+') {
+        const n1 = Number(finalArr[finalArr.length - 1]);
+        const n2 = Number(finalArr[finalArr.length - 2]);
+        finalArr.splice(finalArr.length - 2, 2, (n2 + n1).toString());
+        continue;
+      }
+
+      if (splitValue === '-') {
+        const n1 = Number(finalArr[finalArr.length - 1]);
+        const n2 = Number(finalArr[finalArr.length - 2]);
+        finalArr.splice(finalArr.length - 2, 2, (n1 - n2).toString());
+        continue;
+      }
+
+      if (splitValue === 'DUP') {
+        const lastValue = finalArr[finalArr.length - 1];
+        finalArr.push(lastValue);
+        continue;
+      }
+
+      if (splitValue === 'POP') {
+        const _index = finalArr.length - 1;
+        finalArr.splice(_index, 1);
+        continue;
+      }
+    }
+
+    if (finalArr.length && isPass) {
+      result = finalArr[finalArr.length - 1];
+    }
+
+    return result;
+  }
+
+  // const result = solution('4 5 6 - 7 +');
+  // const result1 = solution('5 6 + -');
+  // const result3 = solution('13 DUP 4 POP 5 DUP + DUP + -');
+  // console.log('result', result);
+  // console.log('result1', result1);
+  // console.log('result3', result3);
+
+  function pipline(str) {
+    const splitStr = str.split(/\s+/);
+
+    let result = '';
+
+    function pushNumber(arr, next) {
+      let finalArr = Array.isArray(arr) ? arr.concat(next) : [].concat(next);
+      return finalArr;
+    }
+
+    function beforeCaculate(prevArr) {
+      if (prevArr.length < 2) {
+        result = [-1];
+        return false;
+      }
+      return result;
+    }
+
+    function sum(prevArr) {
+      if (beforeCaculate(prevArr)) {
+        const lastValue = Number(prevArr[prevArr.length - 1]);
+        const secondLastValue = Number(prevArr[prevArr.length - 2]);
+        prevArr.splice(
+          prevArr.length - 2,
+          2,
+          (lastValue + secondLastValue).toString()
+        );
+      } else {
+        throw new Error('error plus');
+      }
+
+      return prevArr;
+    }
+
+    function minus(prevArr) {
+      if (beforeCaculate(prevArr)) {
+        const lastValue = Number(prevArr[prevArr.length - 1]);
+        const secondLastValue = Number(prevArr[prevArr.length - 2]);
+        prevArr.splice(
+          prevArr.length - 2,
+          2,
+          (lastValue - secondLastValue).toString()
+        );
+      } else {
+        throw new Error('error minus');
+      }
+
+      return prevArr;
+    }
+
+    function copy(prevArr) {
+      const lastValue = prevArr[prevArr.length - 1];
+      prevArr.push(lastValue);
+      return prevArr;
+    }
+
+    function cut(prevArr) {
+      const _index = prevArr.length - 1;
+      prevArr.splice(_index, 1);
+      return prevArr;
+    }
+
+    try {
+      splitStr.forEach((s) => {
+        switch (s) {
+          case '+':
+            result = sum(result);
+            break;
+          case '-':
+            result = minus(result);
+            break;
+          case 'DUP':
+            result = copy(result);
+            break;
+          case 'POP':
+            result = cut(result);
+            break;
+          default:
+            result = pushNumber(result, s);
+            break;
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+
+    return result[result.length - 1];
+  }
+
+  // const piplineResult = pipline('4 5 6 - 7 +');
+  const piplineResult2 = pipline('5 6 + -');
+  // console.log('piplineResult', piplineResult);
+  console.log('piplineResult2', piplineResult2);
+</script>
