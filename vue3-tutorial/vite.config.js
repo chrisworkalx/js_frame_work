@@ -38,7 +38,11 @@ export default defineConfig(({ command, mode }) => {
       Components({
         resolvers: [ElementPlusResolver()]
       })
-    ]
+    ],
+    server: {
+      host: true
+    }
+
     // build: {
     //   //多页面配置
     //     rollupOptions: {

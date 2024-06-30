@@ -83,6 +83,7 @@ const routes = [
     ]
   },
   { path: '/login', component: Login },
+  { path: '/hcp360', component: () => import('../pages/Hcp360/index.vue') },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ];
 
