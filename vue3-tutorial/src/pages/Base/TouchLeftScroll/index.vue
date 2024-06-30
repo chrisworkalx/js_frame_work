@@ -18,8 +18,8 @@
       </div>
     </div>
     <div class="hide-block">
-      <div class="shop-car-button">购物车</div>
-      <div class="shop-save">收藏</div>
+      <div class="shop-car-button" @click="handleBuyShopCar">购物车</div>
+      <div class="shop-save" @click="handleShopSave">收藏</div>
     </div>
   </div>
   <!-- <slide-menu></slide-menu> -->
@@ -81,6 +81,14 @@ export default {
       if (this.menuActive) {
         this.menuActive = false;
       }
+    },
+    handleShopSave() {
+      console.log('收藏');
+    },
+    handleBuyShopCar() {
+      console.log('购物车');
+      this.menuActive = false;
+      this.$refs.contentRef.style.transform = 'translateX(0px)';
     }
   }
 };
